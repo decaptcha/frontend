@@ -28,7 +28,6 @@ const siteConfig = {
       {
         id: 'login',
         label: 'Connect to Wallet',
-        href: '/login',
         variant: 'primary',
       },
     ],

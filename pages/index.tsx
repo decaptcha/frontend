@@ -23,7 +23,6 @@ import { SEO } from "components/seo/seo";
 import { FallInPlace } from "components/motion/fall-in-place";
 import { Hero } from "components/hero";
 import { Link, Br } from "@saas-ui/react";
-import { Em } from "components/typography";
 
 import {
   FiArrowRight,
@@ -46,20 +45,14 @@ import {
 import { Features } from "components/features";
 import { BackgroundGradient } from "components/gradients/background-gradient";
 import { Faq } from "components/faq";
-import { Pricing } from "components/pricing/pricing";
 
 import faq from "data/faq";
-import pricing from "data/pricing";
 
-import {
-  Highlights,
-  HighlightsItem,
-} from "components/highlights";
+import { Highlights, HighlightsItem } from "components/highlights";
 import { Section } from "components/section";
 import Wallets from "components/wallets/Wallets";
 
 const Home: NextPage = () => {
-  
   return (
     <Box>
       <SEO title="deCaptcha" description="Free SaaS landingspage starter kit" />
@@ -70,10 +63,7 @@ const Home: NextPage = () => {
 
         <FeaturesSection />
 
-        <PricingSection />
-
         <FaqSection />
-
       </Box>
     </Box>
   );
@@ -92,18 +82,26 @@ const HeroSection: React.FC = () => {
             title={<FallInPlace>deCaptcha</FallInPlace>}
             description={
               <FallInPlace delay={0.4} fontWeight="medium">
-                New way of redefining <Em>captcha</Em>
-                <Br />  <Br />{" "}
+                <Text>
+                  New way of redefining <Text as="em">captcha</Text>
+                </Text>
+                <Br /> <Br />
+                {""}
               </FallInPlace>
             }
           >
             <FallInPlace delay={0.8}>
               <HStack pt="4" pb="12" spacing="8">
                 <ButtonGroup spacing={4} alignItems="center">
-                  <Wallets />
+                  {/* <Wallets /> */}
                 </ButtonGroup>
               </HStack>
-              built on <u><Em>SOLANA</Em></u>  
+              <Text>
+                built on{" "}
+                <Text as="mark" background="whiteAlpha.900">
+                  SOLANA
+                </Text>
+              </Text>
             </FallInPlace>
           </Hero>
           <Box
@@ -185,10 +183,9 @@ const HighlightsSection = () => {
       <HighlightsItem colSpan={[1, null, 3]} title="Seamless Integration 🚀">
         <VStack alignItems="flex-start" spacing="8">
           <Text color="muted" fontSize="xl">
-            Get started for free with <Em>30+ open source components</Em>.
-            Including authentication screens with Clerk, Supabase and Magic.
-            Fully functional forms with React Hook Form. Data tables with React
-            Table.
+            Get started for free with Including authentication screens with
+            Clerk, Supabase and Magic. Fully functional forms with React Hook
+            Form. Data tables with React Table.
           </Text>
 
           <Flex
@@ -277,8 +274,7 @@ const FeaturesSection = () => {
           textAlign="left"
           as="p"
         >
-          Not your standard
-          <Br /> dashboard template.
+          Not
         </Heading>
       }
       description={
@@ -480,17 +476,6 @@ export const CreateProject = (props) => {
     }
   }
 }`,
-};
-
-
-const PricingSection = () => {
-  return (
-    <Pricing {...pricing}>
-      <Text p="8" textAlign="center" color="muted">
-        VAT may be applicable depending on your location.
-      </Text>
-    </Pricing>
-  );
 };
 
 const FaqSection = () => {

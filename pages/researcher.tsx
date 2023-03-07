@@ -1,5 +1,13 @@
 import { AppShell } from "@saas-ui/app-shell";
 import {
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  StatArrow,
+  StatGroup,
+} from '@chakra-ui/react'
+import {
   Avatar,
   Box,
   Container,
@@ -194,9 +202,7 @@ const Developer: NextPage = () => {
                     <CardTitle fontSize="xl">Unlabeled Dataset</CardTitle>
                   </CardHeader>
                   <CardBody>
-                    <Text fontSize="md">
-                      Upload your unlabeled dataset.
-                    </Text>
+                    <Text fontSize="md">Upload your unlabeled dataset.</Text>
                   </CardBody>
                   <CardFooter>
                     <Button variant="solid" colorScheme="gray">
@@ -207,6 +213,11 @@ const Developer: NextPage = () => {
               </SimpleGrid>
             </FormLayout>
           </FormDialog>
+          <Stat>
+            <StatLabel>Collected Fees</StatLabel>
+            <StatNumber>£0.00</StatNumber>
+            <StatHelpText>Feb 12 - Feb 28</StatHelpText>
+          </Stat>
         </Box>
       </Container>
     </Box>

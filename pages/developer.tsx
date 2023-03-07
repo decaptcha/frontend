@@ -1,5 +1,6 @@
-import { AppShell } from "@saas-ui/app-shell";
 import {
+  Card,
+  CardBody,
   Box,
   Container,
   Heading,
@@ -12,23 +13,6 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import {
-  Card,
-  CardContainer,
-  CardHeader,
-  CardTitle,
-  CardMedia,
-  CardBody,
-  CardFooter,
-} from "@saas-ui/react";
-import {
-  Sidebar,
-  SidebarSection,
-  SidebarToggleButton,
-  SidebarOverlay,
-  NavGroup,
-  NavItem,
-} from "@saas-ui/sidebar";
 
 import { useScrollSpy } from "hooks/use-scrollspy";
 

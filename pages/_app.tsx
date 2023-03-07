@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ConnectionProvider endpoint={endpoint}>
       <SaasProvider theme={theme}>
-        <WalletProvider wallets={wallets} autoConnect>
+        <WalletProvider wallets={wallets}>
           <WalletModalProvider>
             <Layout
               announcementProps={announcement}

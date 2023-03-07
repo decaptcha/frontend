@@ -4,7 +4,8 @@ import { theme } from '@saas-ui/react'
 import components from './components'
 import { fontSizes } from './foundations/typography'
 
-import '@fontsource/fira-code/variable.css'
+import '@fontsource/open-sans/variable.css'
+import '@fontsource/raleway/variable.css'
 
 const colors = {
   "black": "#0c1015",
@@ -165,8 +166,8 @@ const styles = {
 export default extendTheme(
   {
     fonts: {
-      heading: 'FiraCodeVariable, monospace',
-      body: 'FiraCodeVariable, monospace',
+      heading: 'RalewayVariable, sans-serif',
+      body: 'OpenSansVariable, sans-serif',
     },
     config: {
       initialColorMode: 'dark',

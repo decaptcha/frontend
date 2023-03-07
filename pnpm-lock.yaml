@@ -12,6 +12,8 @@ specifiers:
   '@fontsource/fira-code': ^4.5.13
   '@fontsource/fira-mono': ^4.5.10
   '@fontsource/inter': ^4.5.14
+  '@fontsource/open-sans': ^4.5.14
+  '@fontsource/raleway': ^4.5.12
   '@saas-ui/app-shell': ^1.1.0
   '@saas-ui/react': 1.6.1
   '@saas-ui/sidebar': ^0.9.0
@@ -52,6 +54,8 @@ dependencies:
   '@fontsource/fira-code': 4.5.13
   '@fontsource/fira-mono': 4.5.10
   '@fontsource/inter': 4.5.14
+  '@fontsource/open-sans': 4.5.14
+  '@fontsource/raleway': 4.5.12
   '@saas-ui/app-shell': 1.1.0_6gxwxrlqfjs2rp7d4jioxdfkju
   '@saas-ui/react': 1.6.1_vumeepagd27zxigaiilcbo3bem
   '@saas-ui/sidebar': 0.9.0_6bubzrn3cqt2g4fzd555lp37qy
@@ -2866,6 +2870,14 @@ packages:
 
   /@fontsource/inter/4.5.14:
     resolution: {integrity: sha512-JDC9AocdPLuGsASkvWw9hS5gtHE7K9dOwL98XLrk5yjYqxy4uVnScG58NUvFMJDVJRl/7c8Wnap6PEs+7Zvj1Q==}
+    dev: false
+
+  /@fontsource/open-sans/4.5.14:
+    resolution: {integrity: sha512-mBXIIETBlW8q/ocuUN0hyGow2iuf75hQEHQt8R/RJ/HcphVbLg8KB7pHYGbFGDqs75W+SWvTC7JkVeAjT65BuQ==}
+    dev: false
+
+  /@fontsource/raleway/4.5.12:
+    resolution: {integrity: sha512-uKs13d6NFWU4vf5LSDHK/cbaAw+UXkzz03fKjyvkKq8Nop+CeB6o8STEDkZD9/uOo3v3sgm59Wyw8uGWvxoCiA==}
     dev: false
 
   /@fractalwagmi/popup-connection/1.0.21_biqbaboplfbrettd7655fr4n2y:

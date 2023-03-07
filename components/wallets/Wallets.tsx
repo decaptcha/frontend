@@ -20,6 +20,14 @@ const Wallets = () => {
               size="lg"
               fontSize="md"
               borderRadius='30'
+              leftIcon={
+                <Image
+                  src={wallet.adapter.icon}
+                  alt={wallet.adapter.name}
+                  h={4}
+                  w={4}
+                />
+              }
             >
               {wallet.adapter.name}
             </Button>

@@ -49,8 +49,7 @@ import { Faq } from "components/faq";
 import faq from "data/faq";
 
 import { Highlights, HighlightsItem } from "components/highlights";
-import { Section } from "components/section";
-import Wallets from "components/wallets/Wallets";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const Home: NextPage = () => {
   return (
@@ -58,7 +57,7 @@ const Home: NextPage = () => {
       <SEO title="deCaptcha" description="Free SaaS landingspage starter kit" />
       <Box>
         <HeroSection />
-
+        
         <HighlightsSection />
 
         <FeaturesSection />
@@ -85,23 +84,21 @@ const HeroSection: React.FC = () => {
                 <Text>
                   New way of redefining <Text as="em">captcha</Text>
                 </Text>
-                <Br /> <Br />
-                {""}
               </FallInPlace>
             }
           >
             <FallInPlace delay={0.8}>
               <HStack pt="4" pb="12" spacing="8">
                 <ButtonGroup spacing={4} alignItems="center">
-                  {/* <Wallets /> */}
+                  <WalletMultiButton className="wallet-button"/>
+                  <Text>
+                    built on{" "}
+                    <Text as="mark" background="whiteAlpha.900">
+                      <Text as="b">SOLANA</Text>
+                    </Text>
+                  </Text>
                 </ButtonGroup>
               </HStack>
-              <Text>
-                built on{" "}
-                <Text as="mark" background="whiteAlpha.900">
-                  SOLANA
-                </Text>
-              </Text>
             </FallInPlace>
           </Hero>
           <Box

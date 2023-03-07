@@ -1,0 +1,12 @@
+.wallet-button {
+  border: 2px solid whitesmoke !important;
+  color: whitesmoke !important;
+  transition: 0.3s;
+  text-decoration: "none";
+  border-radius: 50px;
+}
+
+.wallet-button:hover {
+  border: 2px solid whitesmoke !important;
+  color: white !important;
+}

@@ -27,8 +27,7 @@ const siteConfig = {
       },
       {
         id: 'login',
-        label: 'Connect to Wallet',
-        variant: 'primary',
+        label: 'Connect to Wallet'
       },
     ],
   },

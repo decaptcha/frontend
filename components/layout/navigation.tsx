@@ -14,7 +14,8 @@ import { MobileNavContent } from "components/mobile-nav";
 import { useDisclosure, useUpdateEffect } from "@chakra-ui/react";
 
 import ThemeToggle from "./theme-toggle";
-import Wallets from "components/wallets/Wallets";
+
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const Navigation: React.FC = () => {
   const mobileNav = useDisclosure();
@@ -38,7 +39,7 @@ const Navigation: React.FC = () => {
     <HStack spacing="2" flexShrink={0}>
       {siteConfig.header.links.map(({ href, id, ...props }, i) => {
         return id === "login" ? (
-          <Wallets />
+          <WalletMultiButton className="wallet-button" />
         ) : (
           <NavLink
             display={["none", null, "block"]}

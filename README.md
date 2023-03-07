@@ -3,10 +3,9 @@
 ### Installation Step
 
 ```bash
-npm install -g pnpm
-pnpm i
+npm install -g yarn
+yarn
 ```
-
 
 ### Running Step
 

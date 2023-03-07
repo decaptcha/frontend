@@ -6,7 +6,6 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -14,20 +13,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": "",
+    "baseUrl": "./src/",
     "paths": {
-      "contentlayer/generated": [".contentlayer/generated"],
-      "data/*": ["data/*"],
-      "components/*": ["components/*"],
-      "hooks/*": ["hooks/*"]
+      "@/components/*": ["components/*"],
+      "@/utils/*": ["utils/*"],
+      "@/layout/*": ["layout/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".contentlayer/generated"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

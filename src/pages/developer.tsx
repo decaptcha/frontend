@@ -6,8 +6,8 @@ import { fetchApiKey } from "api/backend";
 import { Navigation } from "@/components/Navigation";
 
 const developer = () => {
-  const apiKey = useDeveloperApiStore((data) => data.api_key);
-  const setApiKey = useDeveloperApiStore((data) => data.setApiKey);
+  const apiKey = useDeveloperApiStore((data: any) => data.api_key);
+  const setApiKey = useDeveloperApiStore((data: any) => data.setApiKey);
   const wallet = useWallet();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const developer = () => {
       console.log("wallet", wallet.publicKey.toBase58());
       const getApiKey = async () => {
         const data = await fetchApiKey({
-          walletId: wallet.publicKey.toBase58(),
+          walletId: wallet.publicKey?.toBase58(),
         });
         setApiKey(data["api_key"]);
         console.log(apiKey);

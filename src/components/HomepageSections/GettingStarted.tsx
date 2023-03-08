@@ -33,7 +33,7 @@ export const GettingStarted = () => {
       <Container maxW={"7xl"} py={{ base: 14, sm: 20, md: 32 }}>
         <Heading as={"h3"} textAlign={"center"} mb={{ base: 14, sm: 16 }}>
           <TextUnderline
-            bgGradient="linear(to-r, #805AD5, #FF0080)"
+            bgGradient={"linear(to-r, #805AD5, #FF0080)"}
             bgClip="text"
             fontSize="4xl"
           >

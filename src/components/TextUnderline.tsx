@@ -3,6 +3,9 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 
 interface TextUnderlineProps {
   children: ReactNode;
+  bgGradient?: string;
+  bgClip?: string;
+  fontSize?: string;
 }
 
 export const TextUnderline = ({ children }: TextUnderlineProps) => {

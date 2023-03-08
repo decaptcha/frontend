@@ -33,17 +33,17 @@ import { Navigation } from "@/components/Navigation";
 
 const researcher = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
-  const projects = useProjectsStore((data) => data.projects);
-  const setProjects = useProjectsStore((data) => data.setProjects);
-  const setName = useProjectsStore((data) => data.setName);
-  const setLabel = useProjectsStore((data) => data.setLabel);
-  const setThreshold = useProjectsStore((data) => data.setThreshold);
-  const setExpiry = useProjectsStore((data) => data.setExpiry);
-  const name = useProjectsStore((data) => data.name);
-  const label = useProjectsStore((data) => data.label);
-  const threshold = useProjectsStore((data) => data.threshold);
-  const expiry = useProjectsStore((data) => data.expiry);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const projects = useProjectsStore((data: any) => data.projects);
+  const setProjects = useProjectsStore((data: any) => data.setProjects);
+  const setName = useProjectsStore((data: any) => data.setName);
+  const setLabel = useProjectsStore((data: any) => data.setLabel);
+  const setThreshold = useProjectsStore((data: any) => data.setThreshold);
+  const setExpiry = useProjectsStore((data: any) => data.setExpiry);
+  const name = useProjectsStore((data: any) => data.name);
+  const label = useProjectsStore((data: any) => data.label);
+  const threshold = useProjectsStore((data: any) => data.threshold);
+  const expiry = useProjectsStore((data: any) => data.expiry);
   const wallet = useWallet();
 
   const createNewProject = () => {
@@ -53,6 +53,7 @@ const researcher = () => {
         console.log("postData", postData);
         const resp = await createProjectApi(postData);
         console.log(resp);
+        onClose();
       };
       postNewProject({
         project: {
@@ -65,17 +66,17 @@ const researcher = () => {
       });
     }
   };
-  const handleThreshold = (e) => {
-    setThreshold(e.target.value);
+  const handleThreshold = (e: any) => {
+    setThreshold(e?.target?.value);
   };
-  const handleName = (e) => {
-    setName(e.target.value);
+  const handleName = (e: any) => {
+    setName(e.target?.value);
   };
-  const handleExpiry = (e) => {
-    setExpiry(e.target.value);
+  const handleExpiry = (e: any) => {
+    setExpiry(e.target?.value);
   };
 
-  const handleLabel = (e) => {
+  const handleLabel = (e: any) => {
     setLabel(e.target.value);
   };
   useEffect(() => {
@@ -83,7 +84,7 @@ const researcher = () => {
       console.log("wallet", wallet.publicKey.toBase58());
       const getProjectsFromApi = async () => {
         const data = await fetchProjects({
-          walletId: wallet.publicKey.toBase58(),
+          walletId: wallet?.publicKey?.toBase58(),
         });
         setProjects(data["projects"]);
       };
@@ -135,7 +136,7 @@ const researcher = () => {
                 </Thead>
                 <Tbody>
                   {wallet &&
-                    projects.map((project) => {
+                    projects.map((project: any) => {
                       return (
                         <Tr key={project.id}>
                           <Td>{project.name}</Td>
@@ -348,10 +349,10 @@ const researcher = () => {
             </DrawerBody>
 
             <DrawerFooter>
-              <Button variant="primary" mr={3} onClick={onClose}>
+              <Button variant="primary" mr={3} onClick={onClose} key="cancel">
                 Cancel
               </Button>
-              <Button onClick={createNewProject} onClick={onClose}>
+              <Button onClick={createNewProject} key="submit">
                 Submit
               </Button>
             </DrawerFooter>

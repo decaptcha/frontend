@@ -63,7 +63,7 @@ export const Footer = () => {
           <Stack align={"flex-start"}>
             <ListHeader>Researcher</ListHeader>
             {data.map((category) => (
-              <NextLink key={category.label} passHref href={category.href}>
+              <NextLink key={category.label} href={category.href!} passHref>
                 <Link>{category.label}</Link>
               </NextLink>
             ))}

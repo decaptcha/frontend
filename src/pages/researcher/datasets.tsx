@@ -33,22 +33,13 @@ import useProjectsStore from "stores/useProjectsStore";
 import { SEO } from "@/components/SEO";
 import { Navigation } from "@/components/Navigation";
 
-function Feature({ title, desc, ...rest }) {
-  return (
-    <Box p={5} shadow="md" borderWidth="1px" {...rest}>
-      <Heading fontSize="xl">{title}</Heading>
-      <Text mt={4}>{desc}</Text>
-    </Box>
-  );
-}
-
 const researcher = () => {
   const disclosure = useDisclosure();
   const datasetDisclosure = useDisclosure();
-  const project = useProjectsStore((data) => data.project);
-  const projects = useProjectsStore((data) => data.projects);
-  const setProjects = useProjectsStore((data) => data.setProjects);
-  const setProject = useProjectsStore((data) => data.setProject);
+  const project = useProjectsStore((data: any) => data.project);
+  const projects = useProjectsStore((data: any) => data.projects);
+  const setProjects = useProjectsStore((data: any) => data.setProjects);
+  const setProject = useProjectsStore((data: any) => data.setProject);
   const wallet = useWallet();
 
   useEffect(() => {
@@ -56,17 +47,17 @@ const researcher = () => {
       console.log("wallet", wallet.publicKey.toBase58());
       const getProjectsFromApi = async () => {
         const data = await fetchProjects<Response>({
-          walletId: wallet.publicKey.toBase58(),
+          walletId: wallet?.publicKey?.toBase58(),
         });
         setProjects(data["projects"]);
       };
       getProjectsFromApi();
     }
   }, []);
-  const getProjectInformation = async (e) => {
+  const getProjectInformation = async (e: any) => {
     console.log("Select", e.target.value);
     const data = await fetchProject({
-      walletId: wallet.publicKey.toBase58(),
+      walletId: wallet?.publicKey?.toBase58(),
       projectId: e.target.value,
     });
     console.log("asdmaksd", data["project"]);
@@ -103,17 +94,19 @@ const researcher = () => {
                   onChange={getProjectInformation}
                 >
                   {wallet &&
-                    projects.map((project) => {
+                    projects.map((project: any) => {
                       return <option value={project.id}>{project.name}</option>;
                     })}
                 </Select>
               </Flex>
             </Stack>
             <Stack spacing={8} direction="row">
-              <Feature
-                title={project.name}
-                desc={project.active ? `Active` : `Inactive`}
-              />
+              <Box p={5} shadow="md" borderWidth="1px">
+                <Heading fontSize="xl">{project.name}</Heading>
+                <Tag colorScheme={project.active ? `green` : `red`}>
+                  {project.active ? `Active` : `Inactive`}
+                </Tag>
+              </Box>
             </Stack>
             <Box p={4}>
               <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
@@ -137,7 +130,7 @@ const researcher = () => {
                         <Tbody>
                           {wallet &&
                             project &&
-                            project["labelled_images"].map((label) => {
+                            project["labelled_images"].map((label: any) => {
                               return (
                                 <Tr key={label.id}>
                                   <Td>{label.name}</Td>
@@ -193,7 +186,7 @@ const researcher = () => {
                         <Tbody>
                           {wallet &&
                             project &&
-                            project["unlabelled_images"].map((label) => {
+                            project["unlabelled_images"].map((label: any) => {
                               return (
                                 <Tr key={label.id}>
                                   <Td>{label.name}</Td>

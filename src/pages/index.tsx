@@ -7,6 +7,8 @@ import { GettingStarted } from "@/components/HomepageSections/GettingStarted";
 import { OpenSourceProps } from "@/components/HomepageSections/OpenSource";
 import { SEO } from "@/components/SEO";
 import { ExploreTemplates } from "@/components/HomepageSections/ExploreTemplates";
+import { ColorModeScript } from "@chakra-ui/react";
+import { theme } from "../theme"
 
 type PageProps = OpenSourceProps & {};
 
@@ -18,6 +20,7 @@ const Home: NextPage<PageProps> = ({
 }: PageProps) => {
   return (
     <>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <SEO />
       <Hero categoriesCount={categoriesCount} templatesCount={templatesCount} />
       <GettingStarted />

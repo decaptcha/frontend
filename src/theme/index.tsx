@@ -1,10 +1,12 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
+
+const config: ThemeConfig = {
+  initialColorMode: 'dark', // 'dark' | 'light'
+  useSystemColorMode: true,
+}
 
 export const theme = extendTheme({
-  config: {
-    initialColorMode: "dark",
-    useSystemColorMode: false,
-  },
+  config: config,
   fonts: {
     body: `'Kumbh Sans', sans-serif`,
     heading: `'Kumbh Sans', sans-serif`,

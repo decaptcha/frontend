@@ -19,7 +19,7 @@ import { product } from "./templates/product";
 import { multistep } from "./templates/basic3StepForm";
 
 import { imagesAndIcons } from "./components/imagesAndIcons";
-import { FaConnectdevelop } from "react-icons/fa";
+import { FaConnectdevelop, FaDatabase, FaUserAstronaut } from "react-icons/fa";
 import { researcher } from "./templates/researcher";
 import { NavItem } from "@/components/Header/navData";
 
@@ -27,13 +27,16 @@ export const data: Array<NavItem> = [
   {
     label: "Researcher",
     href: `/researcher`,
+    icon: <FaUserAstronaut display={"block"} />,
   },
   {
     label: "Datasets",
     href: `/researcher/datasets`,
+    icon: <FaDatabase />,
   },
   {
     label: "Developer",
     href: `/developer`,
+    icon: <FaConnectdevelop />,
   },
 ];

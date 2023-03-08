@@ -16,28 +16,42 @@ import NextLink from "next/link";
 import { NAV_ITEMS, NavItem } from "@/components/Header/navData";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { FaConnectdevelop, FaUserAstronaut } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 export const DesktopNav = (props: BoxProps) => {
+  const { asPath } = useRouter();
+
+  const activeBg = useColorModeValue("purple.50", "purple.900");
+
   return (
     <Stack direction={"row"} spacing={4} {...props}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <NextLink href={navItem.href ?? "#"} passHref>
-            <Link
-              p={2}
-              fontSize={"m"}
-              fontWeight={"bold"}
-              color={useColorModeValue("gray.700", "gray.300")}
-              _hover={{
-                textDecoration: "none",
-                color: useColorModeValue("gray.800", "white"),
-              }}
-            >
-              {navItem.label}
-            </Link>
-          </NextLink>
-        </Box>
-      ))}
+      {NAV_ITEMS.map((navItem) => {
+        const isActive = asPath === navItem.href;
+        return (
+          <Box key={navItem.label}>
+            <NextLink href={navItem.href ?? "#"} passHref>
+              <Link
+                p={2}
+                fontSize={"m"}
+                fontWeight={"bold"}
+                color={
+                  isActive
+                    ? useColorModeValue("purple.700", "purple.400")
+                    : useColorModeValue("gray.700", "gray.300")
+                }
+                _hover={{
+                  textDecoration: "none",
+                  bg: isActive
+                    ? activeBg
+                    : useColorModeValue("gray.100", "gray.900"),
+                }}
+              >
+                {navItem.label}
+              </Link>
+            </NextLink>
+          </Box>
+        );
+      })}
     </Stack>
   );
 };

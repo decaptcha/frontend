@@ -1,4 +1,4 @@
-import { Stack, Button } from "@chakra-ui/react";
+import { Stack, Button, Tag } from "@chakra-ui/react";
 import {
   Box,
   Flex,
@@ -144,7 +144,13 @@ const researcher = () => {
                                   <Td>{label.clicks}</Td>
                                   <Td>{label["shown_to_users"]}</Td>
                                   <Td>
-                                    {label.active ? `Active` : `Inactive`}
+                                    <Tag
+                                      colorScheme={
+                                        project.active ? `green` : `red`
+                                      }
+                                    >
+                                      {project.active ? `Active` : `Inactive`}
+                                    </Tag>
                                   </Td>
                                   <Td>
                                     <Image
@@ -194,7 +200,13 @@ const researcher = () => {
                                   <Td>{label.clicks}</Td>
                                   <Td>{label["shown_to_users"]}</Td>
                                   <Td>
-                                    {label.active ? `Active` : `Inactive`}
+                                    <Tag
+                                      colorScheme={
+                                        project.active ? `green` : `red`
+                                      }
+                                    >
+                                      {project.active ? `Active` : `Inactive`}
+                                    </Tag>
                                   </Td>
                                   <Td>{label["image_confidence"]}%</Td>
                                   <Td>

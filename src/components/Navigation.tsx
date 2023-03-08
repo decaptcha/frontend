@@ -7,10 +7,12 @@ import {
   Text,
   StackProps,
   useColorModeValue,
+  HStack,
+  Box,
 } from "@chakra-ui/react";
 
 import { data } from "../data";
-import { GITHUB_LINK } from "../constants";
+import { FaConnectdevelop } from "react-icons/fa";
 
 const NavigationLink = ({
   href,
@@ -28,7 +30,7 @@ const NavigationLink = ({
   return (
     <NextLink href={href} passHref>
       <Link
-        fontSize={"sm"}
+        fontSize={"m"}
         rounded={"md"}
         px={3}
         py={2}
@@ -71,7 +73,10 @@ export const Navigation = (props: StackProps) => {
               key={category.label}
               href={`${category.href}`}
             >
-              {category.label}
+              <HStack spacing={4}>
+                <Box>{category.icon}</Box>
+                <Box>{category.label}</Box>
+              </HStack>
             </NavigationLink>
           </Stack>
         </Stack>

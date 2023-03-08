@@ -113,7 +113,12 @@ const researcher = () => {
                 >
                   Researcher
                 </Heading>
-                <Button leftIcon={<FaPlus />} ref={btnRef} onClick={onOpen}>
+                <Button
+                  leftIcon={<FaPlus />}
+                  ref={btnRef}
+                  onClick={onOpen}
+                  colorScheme={"purple"}
+                >
                   Create New Project
                 </Button>
               </Flex>

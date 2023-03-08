@@ -10,6 +10,7 @@ export interface NavItem {
   subLabel?: string;
   children?: Array<NavItem>;
   href?: string;
+  icon?: any;
 }
 
 export const NAV_ITEMS: Array<NavItem> = [

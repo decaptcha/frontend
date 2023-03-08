@@ -11,13 +11,10 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { IoLogInOutline, IoMoon, IoSunny } from "react-icons/io5";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { Logo } from "@/components/Logo";
-import { TextUnderline } from "@/components/TextUnderline";
 import { MobileNav } from "@/components/Header/MobileNav";
 import { DesktopNav } from "@/components/Header/DesktopNav";
-import { CTThemeEditor } from "@/components/Header/CTThemeEditor";
 import Link from "next/link";
 
 export const Header = () => {

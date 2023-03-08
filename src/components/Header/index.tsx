@@ -99,20 +99,6 @@ export const Header = () => {
           >
             <DesktopNav display={{ base: "none", md: "flex" }} />
             <WalletMultiButton />
-            <IconButton
-              size={"sm"}
-              variant={"ghost"}
-              aria-label={"Toggle Color Mode"}
-              onClick={toggleColorMode}
-              icon={
-                colorMode == "light" ? (
-                  <IoMoon size={18} />
-                ) : (
-                  <IoSunny size={18} />
-                )
-              }
-            />
-            <CTThemeEditor />
           </Stack>
         </Container>
       </Flex>

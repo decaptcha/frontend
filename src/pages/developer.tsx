@@ -37,7 +37,13 @@ const developer = () => {
             maxW={{ lg: "calc(100% - 16rem)" }}
           >
             <Stack mb={10}>
-              <Heading size={"xl"}>Developer</Heading>
+              <Heading
+                size={"xl"}
+                bgGradient="linear(to-r, #805AD5, #FF0080)"
+                bgClip="text"
+              >
+                Developer
+              </Heading>
             </Stack>
             <Stack>
               {wallet && wallet.publicKey && (

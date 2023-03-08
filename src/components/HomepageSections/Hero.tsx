@@ -23,13 +23,13 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const confetti = {
   light: {
-    primary: "purple.200", // blue.400
-    secondary: "purple.100", // blue.100
+    primary: "purple.200", // pink.400
+    secondary: "purple.100", // pink.100
   },
 
   dark: {
-    primary: "322659", // blue.900
-    secondary: "44337A", // blue.800
+    primary: "322659", // pink.900
+    secondary: "44337A", // pink.800
   },
 };
 

@@ -55,7 +55,7 @@ export default function SocialProfileSimple() {
           px={3}
         >
           Actress, musician, songwriter and artist. PM for work inquires or{" "}
-          <Link href={"#"} color={"blue.400"}>
+          <Link href={"#"} color={"pink.400"}>
             #tag
           </Link>{" "}
           me in your posts
@@ -103,16 +103,16 @@ export default function SocialProfileSimple() {
             flex={1}
             fontSize={"sm"}
             rounded={"full"}
-            bg={"blue.400"}
+            bg={"pink.400"}
             color={"white"}
             boxShadow={
               "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
             }
             _hover={{
-              bg: "blue.500",
+              bg: "pink.500",
             }}
             _focus={{
-              bg: "blue.500",
+              bg: "pink.500",
             }}
           >
             Follow

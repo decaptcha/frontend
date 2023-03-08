@@ -5,8 +5,8 @@ import Head from "next/head";
 import { ChakraProvider } from "@chakra-ui/react";
 import NProgress from "nprogress";
 import splitbee from "@splitbee/web";
-import "@fontsource/raleway/400.css";
-import "@fontsource/open-sans/700.css";
+import "@fontsource/kumbh-sans";
+
 import { theme } from "../theme";
 import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 import { clusterApiUrl } from "@solana/web3.js";

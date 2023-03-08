@@ -96,14 +96,6 @@ export const Footer = () => {
 
           <Stack align={"flex-start"}>
             <ListHeader>Support us</ListHeader>
-            <Link href={BUY_ME_A_COFFEE_LINK}>
-              <NextImage
-                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                alt="Buy Me A Coffee"
-                height={40}
-                width={142.47}
-              />
-            </Link>
           </Stack>
         </SimpleGrid>
       </Container>

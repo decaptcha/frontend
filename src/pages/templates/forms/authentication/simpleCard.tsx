@@ -25,7 +25,7 @@ export default function SimpleCard() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            to enjoy all of our cool <Link color={"pink.400"}>features</Link> ✌️
           </Text>
         </Stack>
         <Box
@@ -50,13 +50,13 @@ export default function SimpleCard() {
                 justify={"space-between"}
               >
                 <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
+                <Link color={"pink.400"}>Forgot password?</Link>
               </Stack>
               <Button
-                bg={"blue.400"}
+                bg={"pink.400"}
                 color={"white"}
                 _hover={{
-                  bg: "blue.500",
+                  bg: "pink.500",
                 }}
               >
                 Sign in

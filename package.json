@@ -27,6 +27,7 @@
     "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.0.0",
+    "@fontsource/kumbh-sans": "^4.5.12",
     "@fontsource/open-sans": "^4.5.14",
     "@fontsource/raleway": "^4.5.12",
     "@hypertheme-editor/chakra-ui": "^0.1.2",

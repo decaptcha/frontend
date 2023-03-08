@@ -1,4 +1,4 @@
-import { Stack, Button } from "@chakra-ui/react";
+import { Stack, Button, Box, Tag } from "@chakra-ui/react";
 import {
   Flex,
   Heading,
@@ -12,11 +12,19 @@ import {
   Th,
   Td,
   TableContainer,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Input,
 } from "@chakra-ui/react";
 
 import { FaPlus } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { fetchProjects } from "api/backend";
+import { useEffect, useRef } from "react";
+import { createProjectApi, fetchProjects } from "api/backend";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import useProjectsStore from "stores/useProjectsStore";
@@ -24,12 +32,52 @@ import { SEO } from "@/components/SEO";
 import { Navigation } from "@/components/Navigation";
 
 const researcher = () => {
-  const disclosure = useDisclosure();
-  const datasetDisclosure = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
   const projects = useProjectsStore((data) => data.projects);
   const setProjects = useProjectsStore((data) => data.setProjects);
+  const setName = useProjectsStore((data) => data.setName);
+  const setLabel = useProjectsStore((data) => data.setLabel);
+  const setThreshold = useProjectsStore((data) => data.setThreshold);
+  const setExpiry = useProjectsStore((data) => data.setExpiry);
+  const name = useProjectsStore((data) => data.name);
+  const label = useProjectsStore((data) => data.label);
+  const threshold = useProjectsStore((data) => data.threshold);
+  const expiry = useProjectsStore((data) => data.expiry);
   const wallet = useWallet();
 
+  const createNewProject = () => {
+    if (wallet.publicKey) {
+      console.log("wallet", wallet.publicKey.toBase58());
+      const postNewProject = async (postData: any) => {
+        console.log("postData", postData);
+        const resp = await createProjectApi(postData);
+        console.log(resp);
+      };
+      postNewProject({
+        project: {
+          wallet_id: wallet.publicKey.toBase58(),
+          expiry: expiry,
+          label_value: label,
+          threshold: threshold,
+          name: name,
+        },
+      });
+    }
+  };
+  const handleThreshold = (e) => {
+    setThreshold(e.target.value);
+  };
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+  const handleExpiry = (e) => {
+    setExpiry(e.target.value);
+  };
+
+  const handleLabel = (e) => {
+    setLabel(e.target.value);
+  };
   useEffect(() => {
     if (wallet.publicKey) {
       console.log("wallet", wallet.publicKey.toBase58());
@@ -44,6 +92,7 @@ const researcher = () => {
   }, []);
   return (
     <>
+      <SEO />
       <Container maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>
         <Stack
           direction={{ base: "column", lg: "row" }}
@@ -57,8 +106,16 @@ const researcher = () => {
           >
             <Stack mb={10}>
               <Flex justifyContent={"space-between"}>
-                <Heading size={"xl"}>Researcher</Heading>
-                <Button leftIcon={<FaPlus />}>Create New Project</Button>
+                <Heading
+                  size={"xl"}
+                  bgGradient="linear(to-r, #805AD5, #FF0080)"
+                  bgClip="text"
+                >
+                  Researcher
+                </Heading>
+                <Button leftIcon={<FaPlus />} ref={btnRef} onClick={onOpen}>
+                  Create New Project
+                </Button>
               </Flex>
             </Stack>
             <TableContainer>
@@ -78,7 +135,11 @@ const researcher = () => {
                         <Tr key={project.id}>
                           <Td>{project.name}</Td>
                           <Td>{project.threshold}%</Td>
-                          <Td>{project.active ? `Active` : `Inactive`}</Td>
+                          <Td>
+                            <Tag colorScheme={project.active ? `green` : `red`}>
+                              {project.active ? `Active` : `Inactive`}
+                            </Tag>
+                          </Td>
                           <Td>
                             <Button variant="outline">Upload</Button>
                           </Td>
@@ -242,8 +303,56 @@ const researcher = () => {
         </Box> */}
           </Flex>
         </Stack>
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Create new project</DrawerHeader>
+
+            <DrawerBody>
+              <Box pt={4}>
+                <Input placeholder="Project name" onChange={handleName} />
+              </Box>
+              <Box pt={4}>
+                <Input
+                  placeholder="Label name eg: bus, car..."
+                  onChange={handleLabel}
+                />
+              </Box>
+              <Box pt={4}>
+                <Input
+                  placeholder="Threshold"
+                  type={"number"}
+                  borderColor={"secondary.700"}
+                  onChange={handleThreshold}
+                />
+              </Box>
+              <Box pt={4}>
+                <Input
+                  placeholder="Expiry of the project"
+                  type={"date"}
+                  borderColor={"secondary.700"}
+                  onChange={handleExpiry}
+                />
+              </Box>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button variant="primary" mr={3} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button onClick={createNewProject} onClick={onClose}>
+                Submit
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </Container>
-      <SEO />
     </>
   );
 };

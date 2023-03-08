@@ -48,10 +48,10 @@ export default function SplitWithImage() {
         <Stack spacing={4}>
           <Text
             textTransform={"uppercase"}
-            color={"blue.400"}
+            color={"pink.400"}
             fontWeight={600}
             fontSize={"sm"}
-            bg={useColorModeValue("blue.50", "blue.900")}
+            bg={useColorModeValue("pink.50", "pink.900")}
             p={2}
             alignSelf={"flex-start"}
             rounded={"md"}

@@ -1,9 +1,11 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
+  initialColorMode: "dark",
+  useSystemColorMode: false,
   fonts: {
-    body: `'Open Sans', sans-serif`,
-    heading: `'Raleway', sans-serif`,
+    body: `'Kumbh Sans', sans-serif`,
+    heading: `'Kumbh Sans', sans-serif`,
   },
   colors: {
     discord: "#7289da",
@@ -13,6 +15,10 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
+      "::selection": {
+        color: "#fff",
+        background: "purple.700",
+      },
       "html, #__next": {
         height: "100%",
       },
@@ -30,6 +36,9 @@ export const theme = extendTheme({
       },
       "#nprogress": {
         pointerEvents: "none",
+      },
+      a: {
+        borderColor: "pink.500",
       },
       "#nprogress .bar": {
         background: "purple.200",

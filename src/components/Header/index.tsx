@@ -82,6 +82,7 @@ export const Header = () => {
                   bgClip="text"
                   as={"h1"}
                   fontSize={"3xl"}
+                  fontWeight={"bold"}
                 >
                   deCaptcha
                 </Heading>

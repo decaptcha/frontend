@@ -32,9 +32,9 @@ export default function SplitScreen() {
               justify={"space-between"}
             >
               <Checkbox>Remember me</Checkbox>
-              <Link color={"blue.500"}>Forgot password?</Link>
+              <Link color={"pink.500"}>Forgot password?</Link>
             </Stack>
-            <Button colorScheme={"blue"} variant={"solid"}>
+            <Button colorScheme={"pink"} variant={"solid"}>
               Sign in
             </Button>
           </Stack>

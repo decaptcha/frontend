@@ -25,9 +25,9 @@ export const DesktopNav = (props: BoxProps) => {
           <NextLink href={navItem.href ?? "#"} passHref>
             <Link
               p={2}
-              fontSize={"sm"}
-              fontWeight={500}
-              color={useColorModeValue("gray.600", "gray.200")}
+              fontSize={"m"}
+              fontWeight={"bold"}
+              color={useColorModeValue("gray.700", "gray.300")}
               _hover={{
                 textDecoration: "none",
                 color: useColorModeValue("gray.800", "white"),

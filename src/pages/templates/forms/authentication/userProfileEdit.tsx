@@ -93,11 +93,11 @@ export default function UserProfileEdit(): JSX.Element {
             Cancel
           </Button>
           <Button
-            bg={"blue.400"}
+            bg={"pink.400"}
             color={"white"}
             w="full"
             _hover={{
-              bg: "blue.500",
+              bg: "pink.500",
             }}
           >
             Submit

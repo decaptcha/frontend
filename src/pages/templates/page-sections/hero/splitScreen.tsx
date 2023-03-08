@@ -24,14 +24,14 @@ export default function SplitScreen() {
                 position: "absolute",
                 bottom: 1,
                 left: 0,
-                bg: "blue.400",
+                bg: "pink.400",
                 zIndex: -1,
               }}
             >
               Freelance
             </Text>
             <br />{" "}
-            <Text color={"blue.400"} as={"span"}>
+            <Text color={"pink.400"} as={"span"}>
               Design Projects
             </Text>{" "}
           </Heading>
@@ -42,10 +42,10 @@ export default function SplitScreen() {
           <Stack direction={{ base: "column", md: "row" }} spacing={4}>
             <Button
               rounded={"full"}
-              bg={"blue.400"}
+              bg={"pink.400"}
               color={"white"}
               _hover={{
-                bg: "blue.500",
+                bg: "pink.500",
               }}
             >
               Create Project

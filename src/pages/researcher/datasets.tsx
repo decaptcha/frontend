@@ -87,7 +87,13 @@ const researcher = () => {
           >
             <Stack mb={10}>
               <Flex justifyContent={"space-between"}>
-                <Heading size={"xl"}>Datasets</Heading>
+                <Heading
+                  size={"xl"}
+                  bgGradient="linear(to-r, #805AD5, #FF0080)"
+                  bgClip="text"
+                >
+                  Datasets
+                </Heading>
               </Flex>
             </Stack>
             <Stack mb={10}>
@@ -110,7 +116,7 @@ const researcher = () => {
               />
             </Stack>
             <Box p={4}>
-              <Tabs size="md" variant="enclosed">
+              <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
                 <TabList>
                   <Tab>Labled Dataset</Tab>
                   <Tab>Unlabled Dataset</Tab>

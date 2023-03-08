@@ -10,6 +10,16 @@ export type Repo = {
   };
 };
 
+export const createProjectApi = async (postData: any) => {
+  const res = await fetch(`${API_URL}/project`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(postData),
+  });
+  return res;
+};
 export const fetchProjects = async <R extends any>(query: any) => {
   console.log(`${API_URL}/projects/?wallet_id=${query.walletId}`);
   const res = await fetch(`${API_URL}/projects/?wallet_id=${query.walletId}`, {

@@ -23,13 +23,13 @@ import { MdEmail, MdOutlineEmail } from "react-icons/md";
 
 const confetti = {
   light: {
-    primary: "purple.900", // blue.400
-    secondary: "purple.800", // blue.100
+    primary: "purple.900", // pink.400
+    secondary: "purple.800", // pink.100
   },
 
   dark: {
-    primary: "purple.900", // blue.900
-    secondary: "purple.800", // blue.800
+    primary: "purple.900", // pink.900
+    secondary: "purple.800", // pink.800
   },
 };
 
@@ -87,7 +87,7 @@ export default function ContactFormWithSocialButtons() {
                     fontSize="3xl"
                     icon={<MdEmail />}
                     _hover={{
-                      bg: "blue.500",
+                      bg: "pink.500",
                       color: useColorModeValue("white", "gray.700"),
                     }}
                     onClick={onCopy}
@@ -103,7 +103,7 @@ export default function ContactFormWithSocialButtons() {
                     fontSize="3xl"
                     icon={<BsGithub />}
                     _hover={{
-                      bg: "blue.500",
+                      bg: "pink.500",
                       color: useColorModeValue("white", "gray.700"),
                     }}
                     isRound
@@ -117,7 +117,7 @@ export default function ContactFormWithSocialButtons() {
                     size="lg"
                     icon={<BsTwitter size="28px" />}
                     _hover={{
-                      bg: "blue.500",
+                      bg: "pink.500",
                       color: useColorModeValue("white", "gray.700"),
                     }}
                     isRound
@@ -131,7 +131,7 @@ export default function ContactFormWithSocialButtons() {
                     size="lg"
                     icon={<BsLinkedin size="28px" />}
                     _hover={{
-                      bg: "blue.500",
+                      bg: "pink.500",
                       color: useColorModeValue("white", "gray.700"),
                     }}
                     isRound
@@ -181,11 +181,11 @@ export default function ContactFormWithSocialButtons() {
                   </FormControl>
 
                   <Button
-                    colorScheme="blue"
-                    bg="blue.400"
+                    colorScheme="pink"
+                    bg="pink.400"
                     color="white"
                     _hover={{
-                      bg: "blue.500",
+                      bg: "pink.500",
                     }}
                     isFullWidth
                   >

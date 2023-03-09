@@ -306,6 +306,25 @@ export const fetchData = async <R extends any>(query: any) => {
   return data;
 };
 
+export const uploadImagesApi = async <R extends any>(query: any) => {
+  let formData = new FormData();
+  query.files.forEach((file: any) => {
+    formData.append("images", file);  
+  });
+  console.log(query)
+  
+  const res = await fetch(
+    `${API_URL}/upload_images?wallet_id=${query.walletId}&labelled=${query.labelled}&project_id=${query.projectId}`,
+    {
+      method: "PUT",
+      body: formData,
+    }
+  );
+
+  const { resp }: { resp: R } = await res.json();
+  return resp;
+};
+
 export const fetchApiKey = async (query: any) => {
   console.log(`${API_URL}/api_key_stats?wallet_id=${query.walletId}`);
   const res = await fetch(

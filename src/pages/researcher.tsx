@@ -1,14 +1,5 @@
 import {
   Flex,
-  Stack,
-  Button,
-  Box,
-  Tag,
-  SimpleGrid,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
   Heading,
   useDisclosure,
   Table,
@@ -16,6 +7,7 @@ import {
   Tbody,
   Tfoot,
   Container,
+  Text,
   Tr,
   Th,
   Td,
@@ -28,12 +20,30 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Input,
-  Text,
+  HStack,
+  Button,
+  Tag,
+  Box,
+  VStack,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Stack,
+  InputGroup,
+  Icon,
+  FormControl,
+  Alert,
+  AlertIcon,
+  Spinner,
+  AlertDescription,
 } from "@chakra-ui/react";
 
+import { useDropzone } from "react-dropzone";
+
 import { FaPlus } from "react-icons/fa";
-import { useEffect, useRef } from "react";
-import { createProjectApi, fetchProjects } from "api/backend";
+import { useEffect, useRef, useCallback, useState } from "react";
+import { createProjectApi, fetchProjects, uploadImagesApi } from "api/backend";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import useProjectsStore from "stores/useProjectsStore";
@@ -43,7 +53,7 @@ import { Navigation } from "@/components/Navigation";
 const researcher = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
-    isOpen: isUploadOpne,
+    isOpen: isUploadOpen,
     onOpen: onUploadOpen,
     onClose: onUploadClose,
   } = useDisclosure();
@@ -59,11 +69,105 @@ const researcher = () => {
   const label = useProjectsStore((data: any) => data.label);
   const threshold = useProjectsStore((data: any) => data.threshold);
   const expiry = useProjectsStore((data: any) => data.expiry);
+  const projectId = useProjectsStore((data: any) => data.projectId);
+  const setProjectId = useProjectsStore((data: any) => data.setProjectId);
   const wallet = useWallet();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isLoadingL, setIsLoadingL] = useState(false);
+  const [isLoadingUL, setIsLoadingUL] = useState(false);
+  const [errorL, setErrorL] = useState(null);
+  const [errorUL, setErrorUL] = useState(null);
+  const [messageL, setMessageL] = useState(null);
+  const [messageUL, setMessageUL] = useState(null);
 
-  const uploadImages = () => {
-    console.log("uploadImages");
+  const onClickOnUpload = (projectId: any) => {
+    console.log("setting", projectId);
+    setProjectId(projectId);
+    onUploadOpen();
   };
+
+  const onDropLabelled = useCallback(
+    async (acceptedFiles: any, newProjectId: any) => {
+      const files = acceptedFiles;
+
+      if (files.length <= 0) {
+        return;
+      }
+
+      setIsLoadingL(true);
+      setErrorL(null);
+      setMessageL(null);
+
+      try {
+        const resp = await uploadImagesApi({
+          files: files,
+          walletId: wallet?.publicKey?.toBase58(),
+          projectId: newProjectId,
+          labelled: true,
+        });
+        console.log(resp);
+      } catch (e: any) {
+        setIsLoadingL(false);
+        setErrorL(e.message);
+        return;
+      }
+      setIsLoadingL(false);
+      setMessageL("File was uploaded 👍");
+    },
+    []
+  );
+
+  const onDropUnLabelled = useCallback(
+    async (acceptedFiles: any, newProjectId: any) => {
+      const files = acceptedFiles;
+
+      if (files.length <= 0) {
+        return;
+      }
+
+      setIsLoadingUL(true);
+      setErrorUL(null);
+      setMessageUL(null);
+
+      try {
+        await uploadImagesApi({
+          files: files,
+          walletId: wallet?.publicKey?.toBase58(),
+          projectId: newProjectId,
+          labelled: false,
+        });
+      } catch (e: any) {
+        setIsLoadingUL(false);
+        setErrorUL(e.message);
+        return;
+      }
+      setIsLoadingUL(false);
+      setMessageUL("File was uploaded 👍");
+    },
+    []
+  );
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+  } = useDropzone({
+    onDrop: (files: any) => onDropLabelled(files, projectId),
+    accept: {
+      "image/*": [".jpeg", ".png"],
+    },
+  });
+  const {
+    getRootProps: getURootProps,
+    getInputProps: getUInputProps,
+    isDragActive: isUDragActive,
+    isDragAccept: isUDragAccept,
+  } = useDropzone({
+    onDrop: (files: any) => onDropUnLabelled(files, projectId),
+    accept: {
+      "image/*": [".jpeg", ".png"],
+    },
+  });
 
   const createNewProject = () => {
     if (wallet.publicKey) {
@@ -133,12 +237,7 @@ const researcher = () => {
                 >
                   Researcher
                 </Heading>
-                <Button
-                  leftIcon={<FaPlus />}
-                  ref={btnRef}
-                  onClick={onOpen}
-                  colorScheme={"purple"}
-                >
+                <Button leftIcon={<FaPlus />} ref={btnRef} onClick={onOpen}>
                   Create New Project
                 </Button>
               </Flex>
@@ -169,7 +268,7 @@ const researcher = () => {
                             <Button
                               variant="outline"
                               ref={uploadBtnRef}
-                              onClick={onUploadOpen}
+                              onClick={() => onClickOnUpload(project.id)}
                             >
                               Upload
                             </Button>
@@ -230,66 +329,124 @@ const researcher = () => {
             </DrawerBody>
 
             <DrawerFooter>
-              <Button
-                variant="primary"
-                mr={3}
-                onClick={onUploadClose}
-                key="cancel"
-              >
-                Cancel
-              </Button>
-              <Button onClick={uploadImages} key="submit">
-                Submit
-              </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-        <Drawer
-          isOpen={isOpen}
-          placement="right"
-          onClose={onClose}
-          finalFocusRef={btnRef}
-        >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Create new project</DrawerHeader>
-
-            <DrawerBody>
-              <Card>
-                <CardHeader>
-                  <Heading fontSize="xl">Labeled Dataset</Heading>
-                </CardHeader>
-                <CardBody>
-                  <Text>Upload your labeled dataset.</Text>
-                </CardBody>
-                <CardFooter>
-                  <Button variant="solid" colorScheme="gray">
-                    Upload
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <Heading fontSize="xl">Unlabeled Dataset</Heading>
-                </CardHeader>
-                <CardBody>
-                  <Text>Upload your unlabeled dataset.</Text>
-                </CardBody>
-                <CardFooter>
-                  <Button variant="solid" colorScheme="gray">
-                    Upload
-                  </Button>
-                </CardFooter>
-              </Card>
-            </DrawerBody>
-
-            <DrawerFooter>
               <Button variant="primary" mr={3} onClick={onClose} key="cancel">
                 Cancel
               </Button>
               <Button onClick={createNewProject} key="submit">
                 Submit
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+
+        <Drawer
+          isOpen={isUploadOpen}
+          placement="right"
+          onClose={onUploadClose}
+          finalFocusRef={uploadBtnRef}
+        >
+          <DrawerOverlay />
+
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Upload Datasets</DrawerHeader>
+
+            <DrawerBody>
+              <VStack spacing="2">
+                <Card>
+                  <CardHeader>
+                    <Heading fontSize="xl">Labeled Dataset</Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <Flex
+                      bg={"gray.800"}
+                      w={64}
+                      h={64}
+                      justify="center"
+                      align="center"
+                      p={50}
+                      m={2}
+                      borderRadius={5}
+                      textAlign="center"
+                      {...getRootProps()}
+                    >
+                      <input {...getInputProps()} />
+                      {isLoadingL ? (
+                        <Spinner />
+                      ) : isDragActive ? (
+                        <Text>Drop the files here...</Text>
+                      ) : (
+                        <Text>
+                          Drag 'n' drop some images here, or click to select
+                          image
+                        </Text>
+                      )}
+                    </Flex>
+                    {(errorL || messageL) && (
+                      <Alert
+                        status={errorL ? "error" : "success"}
+                        w={250}
+                        borderRadius={5}
+                        m={2}
+                      >
+                        <AlertIcon />
+                        <AlertDescription w={200}>
+                          {errorL || messageL}
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <Heading fontSize="xl">Unlabeled Dataset</Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <Flex
+                      bg={"gray.800"}
+                      w={64}
+                      h={64}
+                      justify="center"
+                      align="center"
+                      p={50}
+                      m={2}
+                      borderRadius={5}
+                      textAlign="center"
+                      {...getURootProps()}
+                    >
+                      <input {...getUInputProps()} />
+                      {isLoadingUL ? (
+                        <Spinner />
+                      ) : isUDragActive ? (
+                        <Text>Drop the files here...</Text>
+                      ) : (
+                        <Text>
+                          Drag 'n' drop some images here, or click to select
+                          image
+                        </Text>
+                      )}
+                    </Flex>
+                    {(errorUL || messageUL) && (
+                      <Alert
+                        status={errorUL ? "error" : "success"}
+                        w={250}
+                        borderRadius={5}
+                        m={2}
+                      >
+                        <AlertIcon />
+                        <AlertDescription w={200}>
+                          {errorUL || messageUL}
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                  </CardBody>
+                </Card>
+              </VStack>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button variant="primary" mr={3} onClick={onUploadClose} key="cancel">
+                Cancel
               </Button>
             </DrawerFooter>
           </DrawerContent>

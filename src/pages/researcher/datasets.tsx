@@ -1,4 +1,11 @@
-import { Stack, Button, Tag } from "@chakra-ui/react";
+import {
+  Stack,
+  Button,
+  Tag,
+  Card,
+  CardHeader,
+  CardBody,
+} from "@chakra-ui/react";
 import {
   Box,
   Flex,
@@ -100,14 +107,31 @@ const researcher = () => {
                 </Select>
               </Flex>
             </Stack>
-            <Stack spacing={8} direction="row">
-              <Box p={5} shadow="md" borderWidth="1px">
-                <Heading fontSize="xl">{project.name}</Heading>
-                <Tag colorScheme={project.active ? `green` : `red`}>
-                  {project.active ? `Active` : `Inactive`}
-                </Tag>
-              </Box>
-            </Stack>
+            {project && (
+              <Stack spacing={8} direction="row">
+                <Card p={2} shadow="md" width={"full"}>
+                  <CardHeader>
+                    <Flex justifyContent={"space-between"}>
+                      <Heading fontSize="xl">{project.name}</Heading>
+                      <Tag colorScheme={project.active ? `green` : `red`}>
+                        {project.active ? `Active` : `Inactive`}
+                      </Tag>
+                    </Flex>
+                  </CardHeader>
+                  <CardBody>
+                    <Tag colorScheme={`purple`} m={2} borderRadius={25}>
+                      {project.threshold}%
+                    </Tag>
+                    {project.expiry && (
+                      <Tag colorScheme={`purple`} m={2} borderRadius={25}>
+                        {project.expiry} in Days
+                      </Tag>
+                    )}
+                  </CardBody>
+                </Card>
+              </Stack>
+            )}
+
             <Box p={4}>
               <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
                 <TabList>

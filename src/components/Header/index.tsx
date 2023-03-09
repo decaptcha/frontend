@@ -95,9 +95,9 @@ export const Header = () => {
             justify={"flex-end"}
           >
             <DesktopNav display={{ base: "none", md: "flex" }} />
-            <WalletMultiButton />
           </Stack>
         </Container>
+        <WalletMultiButton />
       </Flex>
       <MobileNav isOpen={isMobileNavOpen} />
     </Box>

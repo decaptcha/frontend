@@ -2,9 +2,7 @@ import { ReactNode } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import {
-  Link,
   Stack,
-  Text,
   StackProps,
   useColorModeValue,
   HStack,
@@ -12,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import { data } from "../data";
-import { FaConnectdevelop } from "react-icons/fa";
+import Link from "next/link";
 
 const NavigationLink = ({
   href,
@@ -28,8 +26,9 @@ const NavigationLink = ({
   const activeBg = useColorModeValue("purple.50", "purple.900");
 
   return (
-    <NextLink href={href} passHref>
-      <Link
+    <Link href={href} passHref>
+      <HStack
+        as={"a"}
         fontSize={"m"}
         rounded={"md"}
         px={3}
@@ -47,8 +46,8 @@ const NavigationLink = ({
         }}
       >
         {children}
-      </Link>
-    </NextLink>
+      </HStack>
+    </Link>
   );
 };
 

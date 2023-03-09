@@ -1,6 +1,14 @@
-import { Stack, Button, Box, Tag } from "@chakra-ui/react";
 import {
   Flex,
+  Stack,
+  Button,
+  Box,
+  Tag,
+  SimpleGrid,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
   Heading,
   useDisclosure,
   Table,
@@ -20,6 +28,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Input,
+  Text
 } from "@chakra-ui/react";
 
 import { FaPlus } from "react-icons/fa";
@@ -33,7 +42,13 @@ import { Navigation } from "@/components/Navigation";
 
 const researcher = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isUploadOpne,
+    onOpen: onUploadOpen,
+    onClose: onUploadClose,
+  } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
+  const uploadBtnRef = useRef<HTMLButtonElement>(null);
   const projects = useProjectsStore((data: any) => data.projects);
   const setProjects = useProjectsStore((data: any) => data.setProjects);
   const setName = useProjectsStore((data: any) => data.setName);
@@ -45,6 +60,10 @@ const researcher = () => {
   const threshold = useProjectsStore((data: any) => data.threshold);
   const expiry = useProjectsStore((data: any) => data.expiry);
   const wallet = useWallet();
+
+  const uploadImages = () => {
+    console.log("uploadImages");
+  };
 
   const createNewProject = () => {
     if (wallet.publicKey) {
@@ -147,7 +166,13 @@ const researcher = () => {
                             </Tag>
                           </Td>
                           <Td>
-                            <Button variant="outline">Upload</Button>
+                            <Button
+                              variant="outline"
+                              ref={uploadBtnRef}
+                              onClick={onUploadOpen}
+                            >
+                              Upload
+                            </Button>
                           </Td>
                         </Tr>
                       );
@@ -346,6 +371,63 @@ const researcher = () => {
                   onChange={handleExpiry}
                 />
               </Box>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button
+                variant="primary"
+                mr={3}
+                onClick={onUploadClose}
+                key="cancel"
+              >
+                Cancel
+              </Button>
+              <Button onClick={uploadImages} key="submit">
+                Submit
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Create new project</DrawerHeader>
+
+            <DrawerBody>
+              <SimpleGrid columns={2} gap="2">
+                <Card>
+                  <CardHeader>
+                    <Heading fontSize="xl">Labeled Dataset</Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <Text>Upload your labeled dataset.</Text>
+                  </CardBody>
+                  <CardFooter>
+                    <Button variant="solid" colorScheme="gray">
+                      Upload
+                    </Button>
+                  </CardFooter>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <Heading fontSize="xl">Unlabeled Dataset</Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <Text>Upload your unlabeled dataset.</Text>
+                  </CardBody>
+                  <CardFooter>
+                    <Button variant="solid" colorScheme="gray">
+                      Upload
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </SimpleGrid>
             </DrawerBody>
 
             <DrawerFooter>

@@ -41,17 +41,6 @@ interface HeroProps {
   templatesCount?: number;
 }
 
-const Feature: FC = ({ children, ...rest }) => {
-  return (
-    <Stack direction={"row"} align={"center"} {...rest}>
-      <Icon as={IoCheckmarkSharp} color={"purple.400"} w={5} h={5} />
-      <Text color={"gray.500"} fontWeight={600}>
-        {children}
-      </Text>
-    </Stack>
-  );
-};
-
 export const Hero = ({ categoriesCount, templatesCount }: HeroProps) => {
   return (
     <Box
@@ -91,21 +80,6 @@ export const Hero = ({ categoriesCount, templatesCount }: HeroProps) => {
             <Text color={"gray.500"} fontSize={{ md: "lg" }} maxW={"2xl"}>
               New way of defining captcha
             </Text>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              spacing={{ base: 6, sm: 12 }}
-            >
-              <Stack spacing={4}>
-                <Feature>Responsive Demos</Feature>
-                <Feature>Easy Customizable</Feature>
-                <Feature>Written in TypeScript</Feature>
-              </Stack>
-              <Stack spacing={4}>
-                <Feature>100% Open Source</Feature>
-                <Feature>{templatesCount} Templates</Feature>
-                <Feature>{categoriesCount} Categories</Feature>
-              </Stack>
-            </Stack>
           </Stack>
           <Stack direction={{ base: "column", sm: "row" }} spacing={8}>
             <WalletMultiButton />

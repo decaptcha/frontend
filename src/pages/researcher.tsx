@@ -77,8 +77,8 @@ const researcher = () => {
   const [isLoadingUL, setIsLoadingUL] = useState(false);
   const [errorL, setErrorL] = useState(null);
   const [errorUL, setErrorUL] = useState(null);
-  const [messageL, setMessageL] = useState(null);
-  const [messageUL, setMessageUL] = useState(null);
+  const [messageL, setMessageL] = useState<any | null>(null);
+  const [messageUL, setMessageUL] = useState<any | null>(null);
 
   const onClickOnUpload = (projectId: any) => {
     console.log("setting", projectId);

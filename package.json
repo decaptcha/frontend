@@ -15,12 +15,6 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --coverage"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn lint:ts",
-      "pre-push": "yarn lint:ts && yarn test:ci"
-    }
-  },
   "dependencies": {
     "@babel/core": "^7.21.0",
     "@chakra-ui/icons": "^2.0.17",

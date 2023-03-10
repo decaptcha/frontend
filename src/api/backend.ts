@@ -1,4 +1,4 @@
-export const API_URL = "http://058e-183-87-63-158.in.ngrok.io";
+export const API_URL = "http://9e67-183-87-63-158.in.ngrok.io";
 
 export type Repo = {
   id: string;
@@ -22,74 +22,74 @@ export const createProjectApi = async (postData: any) => {
 };
 export const fetchProjects = async <R extends any>(query: any) => {
   console.log(`${API_URL}/projects/?wallet_id=${query.walletId}`);
-  const res = await fetch(`${API_URL}/projects/?wallet_id=${query.walletId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const { resp } = await res.json();
-  // const resp = {
-  //   projects: [
-  //     {
-  //       id: 'f872702d-b67f-4b5f-89af-b7264a89bfa8',
-  //       name: 'bus',
-  //       active: true,
-  //       created_at: '2023-03-05T11:45:55.476424+05:30',
-  //       updated_at: '2023-03-05T11:45:55.476424+05:30',
-  //     },
-  //     {
-  //       id: 'cf6d40a6-2715-4999-99c0-44b1dfba6be9',
-  //       name: 'bicycle',
-  //       active: true,
-  //       created_at: '2023-03-05T11:53:41.855287+05:30',
-  //       updated_at: '2023-03-05T11:53:41.855287+05:30',
-  //     },
-  //     {
-  //       id: '01ab1838-c6a7-440d-888a-5daf63da7b1a',
-  //       name: 'car',
-  //       active: false,
-  //       created_at: '2023-03-07T18:52:17.435916+05:30',
-  //       updated_at: '2023-03-07T18:52:17.435916+05:30',
-  //     },
-  //     {
-  //       id: 'bb58759a-91c9-443c-b268-6beb4e459f88',
-  //       name: 'bike',
-  //       active: false,
-  //       created_at: '2023-03-07T18:53:19.285072+05:30',
-  //       updated_at: '2023-03-07T18:53:19.285072+05:30',
-  //     },
-  //     {
-  //       id: '6b85d6d1-9dc5-4aeb-80de-6fac30264d46',
-  //       name: 'space',
-  //       active: false,
-  //       created_at: '2023-03-07T19:36:28.087735+05:30',
-  //       updated_at: '2023-03-07T19:36:28.087735+05:30',
-  //     },
-  //     {
-  //       id: 'fc84183b-e344-4d14-9ee8-26938292e1e8',
-  //       name: 'space1',
-  //       active: false,
-  //       created_at: '2023-03-07T19:38:22.924265+05:30',
-  //       updated_at: '2023-03-07T19:38:22.924265+05:30',
-  //     },
-  //     {
-  //       id: '030e63f3-58b6-4255-98a8-77852bfcb531',
-  //       name: 'space1',
-  //       active: false,
-  //       created_at: '2023-03-07T19:40:21.103723+05:30',
-  //       updated_at: '2023-03-07T19:40:21.103723+05:30',
-  //     },
-  //     {
-  //       id: 'da9ceac9-8967-4cf8-a574-fa23f10fc202',
-  //       name: 'space10',
-  //       active: false,
-  //       created_at: '2023-03-07T18:53:44.919415+05:30',
-  //       updated_at: '2023-03-07T20:40:02.127196+05:30',
-  //     },
-  //   ],
-  //   wallet_id: 'GrZMZse68SN8kEpFQwNRDHJqdXxbsa8NgjwFeoBkQqr4',
-  // };
+  // const res = await fetch(`${API_URL}/projects/?wallet_id=${query.walletId}`, {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
+  // const { resp } = await res.json();
+  const resp = {
+    projects: [
+      {
+        id: 'f872702d-b67f-4b5f-89af-b7264a89bfa8',
+        name: 'bus',
+        active: true,
+        created_at: '2023-03-05T11:45:55.476424+05:30',
+        updated_at: '2023-03-05T11:45:55.476424+05:30',
+      },
+      {
+        id: 'cf6d40a6-2715-4999-99c0-44b1dfba6be9',
+        name: 'bicycle',
+        active: true,
+        created_at: '2023-03-05T11:53:41.855287+05:30',
+        updated_at: '2023-03-05T11:53:41.855287+05:30',
+      },
+      {
+        id: '01ab1838-c6a7-440d-888a-5daf63da7b1a',
+        name: 'car',
+        active: false,
+        created_at: '2023-03-07T18:52:17.435916+05:30',
+        updated_at: '2023-03-07T18:52:17.435916+05:30',
+      },
+      {
+        id: 'bb58759a-91c9-443c-b268-6beb4e459f88',
+        name: 'bike',
+        active: false,
+        created_at: '2023-03-07T18:53:19.285072+05:30',
+        updated_at: '2023-03-07T18:53:19.285072+05:30',
+      },
+      {
+        id: '6b85d6d1-9dc5-4aeb-80de-6fac30264d46',
+        name: 'space',
+        active: false,
+        created_at: '2023-03-07T19:36:28.087735+05:30',
+        updated_at: '2023-03-07T19:36:28.087735+05:30',
+      },
+      {
+        id: 'fc84183b-e344-4d14-9ee8-26938292e1e8',
+        name: 'space1',
+        active: false,
+        created_at: '2023-03-07T19:38:22.924265+05:30',
+        updated_at: '2023-03-07T19:38:22.924265+05:30',
+      },
+      {
+        id: '030e63f3-58b6-4255-98a8-77852bfcb531',
+        name: 'space1',
+        active: false,
+        created_at: '2023-03-07T19:40:21.103723+05:30',
+        updated_at: '2023-03-07T19:40:21.103723+05:30',
+      },
+      {
+        id: 'da9ceac9-8967-4cf8-a574-fa23f10fc202',
+        name: 'space10',
+        active: false,
+        created_at: '2023-03-07T18:53:44.919415+05:30',
+        updated_at: '2023-03-07T20:40:02.127196+05:30',
+      },
+    ],
+    wallet_id: 'GrZMZse68SN8kEpFQwNRDHJqdXxbsa8NgjwFeoBkQqr4',
+  };
   return resp;
 };
 
@@ -309,10 +309,10 @@ export const fetchData = async <R extends any>(query: any) => {
 export const uploadImagesApi = async <R extends any>(query: any) => {
   let formData = new FormData();
   query.files.forEach((file: any) => {
-    formData.append("images", file);  
+    formData.append("images", file);
   });
-  console.log(query)
-  
+  console.log(query);
+
   const res = await fetch(
     `${API_URL}/upload_images?wallet_id=${query.walletId}&labelled=${query.labelled}&project_id=${query.projectId}`,
     {
@@ -336,6 +336,21 @@ export const fetchApiKey = async (query: any) => {
       },
     }
   );
+  const d = await res.json();
+  console.log(d);
+  const { resp } = d;
+  return resp;
+};
+
+export const updateProjectApi = async (query: any) => {
+  console.log(`${API_URL}/updateProject`, query);
+  const res = await fetch(`${API_URL}/update_project`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(query),
+  });
   const d = await res.json();
   console.log(d);
   const { resp } = d;

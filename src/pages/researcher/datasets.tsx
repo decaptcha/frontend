@@ -5,6 +5,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   Box,
@@ -148,7 +149,6 @@ const researcher = () => {
                             <Th>Clicks</Th>
                             <Th>Shown to Users</Th>
                             <Th>Status</Th>
-                            <Th>Image</Th>
                           </Tr>
                         </Thead>
                         <Tbody>
@@ -157,7 +157,25 @@ const researcher = () => {
                             project["labelled_images"].map((label: any) => {
                               return (
                                 <Tr key={label.id}>
-                                  <Td>{label.name}</Td>
+                                  <Td>
+                                    <Flex
+                                      alignItems="center"
+                                      py=".8rem"
+                                      minWidth="100%"
+                                      flexWrap="nowrap"
+                                    >
+                                      <Image
+                                        h={"64px"}
+                                        w={"64px"}
+                                        me="18px"
+                                        key={label.id}
+                                        src={label.url}
+                                        alt={label.name}
+                                        fallbackSrc="https://via.placeholder.com/150"
+                                      />
+                                      {label.name}
+                                    </Flex>
+                                  </Td>
                                   <Td>{label.clicks}</Td>
                                   <Td>{label["shown_to_users"]}</Td>
                                   <Td>
@@ -169,15 +187,6 @@ const researcher = () => {
                                       {project.active ? `Active` : `Inactive`}
                                     </Tag>
                                   </Td>
-                                  <Td>
-                                    <Image
-                                      boxSize="64px"
-                                      key={label.id}
-                                      src={label.url}
-                                      alt={label.name}
-                                      fallbackSrc="https://via.placeholder.com/150"
-                                    />
-                                  </Td>
                                 </Tr>
                               );
                             })}
@@ -188,7 +197,6 @@ const researcher = () => {
                             <Th>Clicks</Th>
                             <Th>Shown to Users</Th>
                             <Th>Status</Th>
-                            <Th>Image</Th>
                           </Tr>
                         </Tfoot>
                       </Table>
@@ -204,16 +212,48 @@ const researcher = () => {
                             <Th>Shown to Users</Th>
                             <Th>Status</Th>
                             <Th>Confidence</Th>
-                            <Th>Image</Th>
                           </Tr>
                         </Thead>
                         <Tbody>
                           {wallet &&
                             project &&
                             project["unlabelled_images"].map((label: any) => {
+                              const borderColor = useColorModeValue(
+                                "gray.200",
+                                "gray.600"
+                              );
                               return (
                                 <Tr key={label.id}>
-                                  <Td>{label.name}</Td>
+                                  <Td
+                                    minWidth={{ sm: "250px" }}
+                                    pl="0px"
+                                    borderColor={borderColor}
+                                  >
+                                    <Flex
+                                      alignItems="center"
+                                      py=".8rem"
+                                      minWidth="100%"
+                                      flexWrap="nowrap"
+                                    >
+                                      <Image
+                                        h={"24px"}
+                                        w={"24px"}
+                                        me="18px"
+                                        key={label.id}
+                                        src={label.url}
+                                        alt={label.name}
+                                        borderRadius="12px"
+                                        fallbackSrc="https://via.placeholder.com/150"
+                                      />
+                                      <Text
+                                        fontSize="md"
+                                        fontWeight="bold"
+                                        minWidth="100%"
+                                      >
+                                        {label.name}
+                                      </Text>
+                                    </Flex>
+                                  </Td>
                                   <Td>{label.clicks}</Td>
                                   <Td>{label["shown_to_users"]}</Td>
                                   <Td>
@@ -226,15 +266,6 @@ const researcher = () => {
                                     </Tag>
                                   </Td>
                                   <Td>{label["image_confidence"]}%</Td>
-                                  <Td>
-                                    <Image
-                                      boxSize="64px"
-                                      key={label.id}
-                                      src={label.url}
-                                      alt={label.name}
-                                      fallbackSrc="https://via.placeholder.com/150"
-                                    />
-                                  </Td>
                                 </Tr>
                               );
                             })}
@@ -246,7 +277,6 @@ const researcher = () => {
                             <Th>Shown to Users</Th>
                             <Th>Status</Th>
                             <Th>Confidence</Th>
-                            <Th>Image</Th>
                           </Tr>
                         </Tfoot>
                       </Table>

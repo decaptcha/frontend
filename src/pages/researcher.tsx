@@ -20,7 +20,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Input,
-  HStack,
+  Switch,
   Button,
   Tag,
   Box,
@@ -37,13 +37,24 @@ import {
   AlertIcon,
   Spinner,
   AlertDescription,
+  Badge,
+  MenuButton,
+  Menu,
+  MenuItem,
+  MenuList,
+  IconButton,
 } from "@chakra-ui/react";
 
 import { useDropzone } from "react-dropzone";
 
-import { FaPlus } from "react-icons/fa";
+import { FaEdit, FaEllipsisV, FaPlus, FaUpload } from "react-icons/fa";
 import { useEffect, useRef, useCallback, useState } from "react";
-import { createProjectApi, fetchProjects, uploadImagesApi } from "api/backend";
+import {
+  createProjectApi,
+  fetchProjects,
+  updateProjectApi,
+  uploadImagesApi,
+} from "api/backend";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import useProjectsStore from "stores/useProjectsStore";
@@ -61,6 +72,8 @@ const researcher = () => {
   const uploadBtnRef = useRef<HTMLButtonElement>(null);
   const projects = useProjectsStore((data: any) => data.projects);
   const setProjects = useProjectsStore((data: any) => data.setProjects);
+  const project = useProjectsStore((data: any) => data.project);
+  const setProject = useProjectsStore((data: any) => data.setProject);
   const setName = useProjectsStore((data: any) => data.setName);
   const setLabel = useProjectsStore((data: any) => data.setLabel);
   const setThreshold = useProjectsStore((data: any) => data.setThreshold);
@@ -71,6 +84,7 @@ const researcher = () => {
   const expiry = useProjectsStore((data: any) => data.expiry);
   const projectId = useProjectsStore((data: any) => data.projectId);
   const setProjectId = useProjectsStore((data: any) => data.setProjectId);
+
   const wallet = useWallet();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isLoadingL, setIsLoadingL] = useState(false);
@@ -79,6 +93,50 @@ const researcher = () => {
   const [errorUL, setErrorUL] = useState(null);
   const [messageL, setMessageL] = useState<any | null>(null);
   const [messageUL, setMessageUL] = useState<any | null>(null);
+  const [drawerTitle, setDrawerTitle] = useState<any | null>(null);
+
+  const onCreateProject = () => {
+    setDrawerTitle("Create new project");
+    setProject(null);
+    // setStatus(false)
+    setThreshold(null);
+    setExpiry(null);
+    setName(null);
+    setLabel(null);
+    onOpen();
+  };
+
+  const updateProjectStatus = () => {
+    console.log("updateProject");
+    const callUpdateProjectApi = async () => {
+      const resp = await updateProjectApi({
+        project: {
+          wallet_id: wallet?.publicKey?.toBase58(),
+          active: project?.active,
+          id: project?.id,
+          name: name,
+          label_value: label,
+          threshold: threshold,
+          expiry: expiry,
+        },
+      });
+      console.log("Update Project Resp", resp);
+    };
+    callUpdateProjectApi();
+    onClose();
+  };
+
+  const editProject = (project: any) => {
+    setDrawerTitle("Edit Project");
+    console.log("Project", project);
+    setProject(project);
+
+    setThreshold(project.threshold);
+    setName(project.name);
+    setExpiry(project.expiry);
+    setLabel(project.label);
+    onOpen();
+  };
 
   const onClickOnUpload = (projectId: any) => {
     console.log("setting", projectId);
@@ -146,17 +204,13 @@ const researcher = () => {
     },
     []
   );
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-  } = useDropzone({
-    onDrop: (files: any) => onDropLabelled(files, projectId),
-    accept: {
-      "image/*": [".jpeg", ".png"],
-    },
-  });
+  const { getRootProps, getInputProps, isDragActive, isDragAccept } =
+    useDropzone({
+      onDrop: (files: any) => onDropLabelled(files, projectId),
+      accept: {
+        "image/*": [".jpeg", ".png"],
+      },
+    });
   const {
     getRootProps: getURootProps,
     getInputProps: getUInputProps,
@@ -193,7 +247,7 @@ const researcher = () => {
     setThreshold(e?.target?.value);
   };
   const handleName = (e: any) => {
-    setName(e.target?.value);
+    setName(e?.target?.value);
   };
   const handleExpiry = (e: any) => {
     setExpiry(e.target?.value);
@@ -237,7 +291,11 @@ const researcher = () => {
                 >
                   Researcher
                 </Heading>
-                <Button leftIcon={<FaPlus />} ref={btnRef} onClick={onOpen}>
+                <Button
+                  leftIcon={<FaPlus />}
+                  ref={btnRef}
+                  onClick={onCreateProject}
+                >
                   Create New Project
                 </Button>
               </Flex>
@@ -260,18 +318,36 @@ const researcher = () => {
                           <Td>{project.name}</Td>
                           <Td>{project.threshold}%</Td>
                           <Td>
-                            <Tag colorScheme={project.active ? `green` : `red`}>
+                            <Badge
+                              colorScheme={project.active ? `green` : `red`}
+                            >
                               {project.active ? `Active` : `Inactive`}
-                            </Tag>
+                            </Badge>
                           </Td>
                           <Td>
-                            <Button
-                              variant="outline"
-                              ref={uploadBtnRef}
-                              onClick={() => onClickOnUpload(project.id)}
-                            >
-                              Upload
-                            </Button>
+                            <Menu>
+                              <MenuButton
+                                as={IconButton}
+                                aria-label="Options"
+                                icon={<FaEllipsisV />}
+                                variant="outline"
+                              />
+                              <MenuList>
+                                <MenuItem
+                                  icon={<FaUpload />}
+                                  ref={uploadBtnRef}
+                                  onClick={() => onClickOnUpload(project.id)}
+                                >
+                                  Upload
+                                </MenuItem>
+                                <MenuItem
+                                  icon={<FaEdit />}
+                                  onClick={() => editProject(project)}
+                                >
+                                  Edit
+                                </MenuItem>
+                              </MenuList>
+                            </Menu>
                           </Td>
                         </Tr>
                       );
@@ -298,24 +374,28 @@ const researcher = () => {
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader>Create new project</DrawerHeader>
+            <DrawerHeader>{drawerTitle}</DrawerHeader>
 
             <DrawerBody>
               <Box pt={4}>
-                <Input placeholder="Project name" onChange={handleName} />
+                <Input
+                  placeholder="Project name"
+                  onChange={handleName}
+                  value={name}
+                />
               </Box>
               <Box pt={4}>
                 <Input
                   placeholder="Label name eg: bus, car..."
                   onChange={handleLabel}
+                  value={label}
                 />
               </Box>
               <Box pt={4}>
                 <Input
                   placeholder="Threshold"
-                  type={"number"}
-                  borderColor={"secondary.700"}
                   onChange={handleThreshold}
+                  value={threshold}
                 />
               </Box>
               <Box pt={4}>
@@ -324,6 +404,7 @@ const researcher = () => {
                   type={"date"}
                   borderColor={"secondary.700"}
                   onChange={handleExpiry}
+                  value={expiry}
                 />
               </Box>
             </DrawerBody>
@@ -332,7 +413,14 @@ const researcher = () => {
               <Button variant="primary" mr={3} onClick={onClose} key="cancel">
                 Cancel
               </Button>
-              <Button onClick={createNewProject} key="submit">
+              <Button
+                onClick={
+                  drawerTitle === "Edit Project"
+                    ? updateProjectStatus
+                    : createNewProject
+                }
+                key="submit"
+              >
                 Submit
               </Button>
             </DrawerFooter>
@@ -445,7 +533,12 @@ const researcher = () => {
             </DrawerBody>
 
             <DrawerFooter>
-              <Button variant="primary" mr={3} onClick={onUploadClose} key="cancel">
+              <Button
+                variant="primary"
+                mr={3}
+                onClick={onUploadClose}
+                key="cancel"
+              >
                 Cancel
               </Button>
             </DrawerFooter>

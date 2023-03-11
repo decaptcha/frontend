@@ -236,8 +236,20 @@ const researcher = () => {
                     <CardHeader>
                       <Flex justifyContent={"space-between"}>
                         <Heading fontSize="xl">{project.name}</Heading>
-                        <Tag colorScheme={project.active ? `green` : `red`}>
-                          {project?.active ? `Active` : `Inactive`}
+                        <Tag
+                          colorScheme={
+                            project.active && !project.is_completed
+                              ? `yellow`
+                              : !project.active && !project.is_completed
+                              ? `red`
+                              : `green`
+                          }
+                        >
+                          {project.active && !project.is_completed
+                            ? `Ongoing`
+                            : !project.active && !project.is_completed
+                            ? `Not Started`
+                            : `Completed`}
                         </Tag>
                       </Flex>
                     </CardHeader>
@@ -300,34 +312,36 @@ const researcher = () => {
                           <Tbody>
                             {wallet &&
                               project &&
-                              project?.["labelled_images"]?.map((label: any) => {
-                                return (
-                                  <Tr key={label?.id}>
-                                    <Td>
-                                      <Flex
-                                        alignItems="center"
-                                        py=".8rem"
-                                        minWidth="100%"
-                                        flexWrap="nowrap"
-                                      >
-                                        <Image
-                                          h={"64px"}
-                                          w={"64px"}
-                                          me="18px"
-                                          key={label?.id}
-                                          src={label?.url}
-                                          alt={label?.name}
-                                          fallbackSrc="https://via.placeholder.com/150"
-                                          borderRadius={"4px"}
-                                        />
-                                        {label?.name}
-                                      </Flex>
-                                    </Td>
-                                    <Td>{label?.clicks}</Td>
-                                    <Td>{label?.["shown_to_users"]}</Td>
-                                  </Tr>
-                                );
-                              })}
+                              project?.["labelled_images"]?.map(
+                                (label: any) => {
+                                  return (
+                                    <Tr key={label?.id}>
+                                      <Td>
+                                        <Flex
+                                          alignItems="center"
+                                          py=".8rem"
+                                          minWidth="100%"
+                                          flexWrap="nowrap"
+                                        >
+                                          <Image
+                                            h={"64px"}
+                                            w={"64px"}
+                                            me="18px"
+                                            key={label?.id}
+                                            src={label?.url}
+                                            alt={label?.name}
+                                            fallbackSrc="https://via.placeholder.com/150"
+                                            borderRadius={"4px"}
+                                          />
+                                          {label?.name}
+                                        </Flex>
+                                      </Td>
+                                      <Td>{label?.clicks}</Td>
+                                      <Td>{label?.["shown_to_users"]}</Td>
+                                    </Tr>
+                                  );
+                                }
+                              )}
                           </Tbody>
                           <Tfoot>
                             <Tr>
@@ -353,49 +367,51 @@ const researcher = () => {
                           <Tbody>
                             {wallet &&
                               project &&
-                              project["unlabelled_images"]?.map((label: any) => {
-                                const borderColor = useColorModeValue(
-                                  "gray.200",
-                                  "gray.600"
-                                );
-                                return (
-                                  <Tr key={label.id}>
-                                    <Td
-                                      minWidth={{ sm: "250px" }}
-                                      pl="0px"
-                                      borderColor={borderColor}
-                                    >
-                                      <Flex
-                                        alignItems="center"
-                                        py=".8rem"
-                                        minWidth="100%"
-                                        flexWrap="nowrap"
+                              project["unlabelled_images"]?.map(
+                                (label: any) => {
+                                  const borderColor = useColorModeValue(
+                                    "gray.200",
+                                    "gray.600"
+                                  );
+                                  return (
+                                    <Tr key={label.id}>
+                                      <Td
+                                        minWidth={{ sm: "250px" }}
+                                        pl="0px"
+                                        borderColor={borderColor}
                                       >
-                                        <Image
-                                          h={"128px"}
-                                          w={"128px"}
-                                          me={"18px"}
-                                          key={label.id}
-                                          src={label.url}
-                                          alt={label.name}
-                                          borderRadius="4px"
-                                          fallbackSrc="https://via.placeholder.com/150"
-                                        />
-                                        <Text
-                                          fontSize="md"
-                                          fontWeight="bold"
+                                        <Flex
+                                          alignItems="center"
+                                          py=".8rem"
                                           minWidth="100%"
+                                          flexWrap="nowrap"
                                         >
-                                          {label.name}
-                                        </Text>
-                                      </Flex>
-                                    </Td>
-                                    <Td>{label.clicks}</Td>
-                                    <Td>{label["shown_to_users"]}</Td>
-                                    <Td>{label["image_confidence"]}%</Td>
-                                  </Tr>
-                                );
-                              })}
+                                          <Image
+                                            h={"128px"}
+                                            w={"128px"}
+                                            me={"18px"}
+                                            key={label.id}
+                                            src={label.url}
+                                            alt={label.name}
+                                            borderRadius="4px"
+                                            fallbackSrc="https://via.placeholder.com/150"
+                                          />
+                                          <Text
+                                            fontSize="md"
+                                            fontWeight="bold"
+                                            minWidth="100%"
+                                          >
+                                            {label.name}
+                                          </Text>
+                                        </Flex>
+                                      </Td>
+                                      <Td>{label.clicks}</Td>
+                                      <Td>{label["shown_to_users"]}</Td>
+                                      <Td>{label["image_confidence"]}%</Td>
+                                    </Tr>
+                                  );
+                                }
+                              )}
                           </Tbody>
                           <Tfoot>
                             <Tr>
@@ -420,7 +436,7 @@ const researcher = () => {
           onClose={onClose}
           finalFocusRef={btnRef}
         >
-          <DrawerOverlay  bg="none" backdropFilter="auto" backdropBlur="2px" />
+          <DrawerOverlay bg="none" backdropFilter="auto" backdropBlur="2px" />
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader>Edit project</DrawerHeader>
@@ -478,14 +494,14 @@ const researcher = () => {
             <ModalCloseButton />
             <ModalBody>
               <Text>
-                Number of unlabelled images: {project?.unlabelled_images?.length}
+                Number of unlabelled images:{" "}
+                {project?.unlabelled_images?.length}
               </Text>
               <Text>
-                Number of token: {10 * (project?.unlabelled_images?.length)}
+                Number of token: {10 * project?.unlabelled_images?.length}
               </Text>
               <Text>
-                Total Amount:{" "}
-                {0.1 * 10 * (project?.unlabelled_images?.length)}
+                Total Amount: {0.1 * 10 * project?.unlabelled_images?.length}
               </Text>
             </ModalBody>
 

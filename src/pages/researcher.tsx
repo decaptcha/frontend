@@ -111,6 +111,10 @@ const researcher = () => {
   const [messageL, setMessageL] = useState<any | null>(null);
   const [messageUL, setMessageUL] = useState<any | null>(null);
   const [drawerTitle, setDrawerTitle] = useState<any | null>(null);
+  const [activeProjectsCount, setActiveProjectsCount] = useState<any | null>(0);
+  const [inactiveProjectsCount, setInactiveProjectsCount] = useState<
+    any | null
+  >(0);
 
   const onCreateProject = () => {
     setDrawerTitle("Create new project");
@@ -247,7 +251,11 @@ const researcher = () => {
         const data = await fetchProjects({
           walletId: wallet?.publicKey?.toBase58(),
         });
+        console.log(data["projects"]);
         setProjects(data["projects"]);
+        setActiveProjectsCount(data["active_projects"]);
+        setInactiveProjectsCount(data["inactive_projects"]);
+        console.log(projects);
       };
       getProjectsFromApi();
     }
@@ -318,7 +326,12 @@ const researcher = () => {
                       </Flex>
                     </CardBody>
                   </Card>
-                  <Card minH="100px" borderRadius={"16px"} variant={"elevated"} bg={"purple.900"}>
+                  <Card
+                    minH="100px"
+                    borderRadius={"16px"}
+                    variant={"elevated"}
+                    bg={"purple.900"}
+                  >
                     <CardBody>
                       <Flex direction="column">
                         <Flex
@@ -335,13 +348,11 @@ const researcher = () => {
                               fontWeight="bold"
                               textTransform="uppercase"
                             >
-                              Labelled Images
+                              Active Projects
                             </StatLabel>
                             <Flex>
                               <StatNumber fontSize="lg" fontWeight="bold">
-                                {projects?.labelled_images
-                                  ? 0
-                                  : projects?.labelled_images?.length}
+                                {activeProjectsCount}
                               </StatNumber>
                             </Flex>
                           </Stat>
@@ -372,16 +383,11 @@ const researcher = () => {
                               fontWeight="bold"
                               textTransform="uppercase"
                             >
-                              Unlabelled Images
+                              Inactive Projects
                             </StatLabel>
                             <Flex>
-                              <StatNumber
-                                fontSize="lg"
-                                fontWeight="bold"
-                              >
-                                {projects?.unlabelled_images
-                                  ? 0
-                                  : projects?.unlabelled_images?.length}{" "}
+                              <StatNumber fontSize="lg" fontWeight="bold">
+                                {inactiveProjectsCount}{" "}
                               </StatNumber>
                             </Flex>
                           </Stat>
@@ -433,10 +439,21 @@ const researcher = () => {
                                     <Td>
                                       <Tag
                                         colorScheme={
-                                          project.active ? `green` : `red`
+                                          project.active &&
+                                          !project.is_completed
+                                            ? `yellow`
+                                            : !project.active &&
+                                              !project.is_completed
+                                            ? `red`
+                                            : `green`
                                         }
                                       >
-                                        {project.active ? `Active` : `Inactive`}
+                                        {project.active && !project.is_completed
+                                          ? `Ongoing`
+                                          : !project.active &&
+                                            !project.is_completed
+                                          ? `Not Started`
+                                          : `Completed`}
                                       </Tag>
                                     </Td>
                                     <Td>
@@ -453,6 +470,15 @@ const researcher = () => {
                                             ref={uploadBtnRef}
                                             onClick={() =>
                                               onClickOnUpload(project.id)
+                                            }
+                                            isDisabled={
+                                              project.active &&
+                                              !project.is_completed
+                                                ? true
+                                                : !project.active &&
+                                                  !project.is_completed
+                                                ? false
+                                                : true
                                             }
                                           >
                                             Upload
@@ -479,7 +505,7 @@ const researcher = () => {
           onClose={onClose}
           finalFocusRef={btnRef}
         >
-          <DrawerOverlay  bg="none" backdropFilter="auto" backdropBlur="2px"/>
+          <DrawerOverlay bg="none" backdropFilter="auto" backdropBlur="2px" />
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader>Create New Project</DrawerHeader>

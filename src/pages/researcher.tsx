@@ -43,6 +43,20 @@ import {
   MenuItem,
   MenuList,
   IconButton,
+  Textarea,
+  FormLabel,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  Stat,
+  StatLabel,
+  StatNumber,
+  SimpleGrid,
+  Divider,
 } from "@chakra-ui/react";
 
 import { useDropzone } from "react-dropzone";
@@ -60,6 +74,8 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import useProjectsStore from "stores/useProjectsStore";
 import { SEO } from "@/components/SEO";
 import { Navigation } from "@/components/Navigation";
+import { GoProject } from "react-icons/go";
+import { MdLabelOutline, MdOutlineLabelOff } from "react-icons/md";
 
 const researcher = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -77,14 +93,15 @@ const researcher = () => {
   const setName = useProjectsStore((data: any) => data.setName);
   const setLabel = useProjectsStore((data: any) => data.setLabel);
   const setThreshold = useProjectsStore((data: any) => data.setThreshold);
-  const setExpiry = useProjectsStore((data: any) => data.setExpiry);
   const name = useProjectsStore((data: any) => data.name);
   const label = useProjectsStore((data: any) => data.label);
   const threshold = useProjectsStore((data: any) => data.threshold);
-  const expiry = useProjectsStore((data: any) => data.expiry);
+  const description = useProjectsStore((data: any) => data.description);
+  const active = useProjectsStore((data: any) => data.active);
   const projectId = useProjectsStore((data: any) => data.projectId);
   const setProjectId = useProjectsStore((data: any) => data.setProjectId);
-
+  const setDescription = useProjectsStore((data: any) => data.setDescription);
+  const setActive = useProjectsStore((data: any) => data.setActive);
   const wallet = useWallet();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isLoadingL, setIsLoadingL] = useState(false);
@@ -100,41 +117,9 @@ const researcher = () => {
     setProject(null);
     // setStatus(false)
     setThreshold(null);
-    setExpiry(null);
     setName(null);
     setLabel(null);
-    onOpen();
-  };
-
-  const updateProjectStatus = () => {
-    console.log("updateProject");
-    const callUpdateProjectApi = async () => {
-      const resp = await updateProjectApi({
-        project: {
-          wallet_id: wallet?.publicKey?.toBase58(),
-          active: project?.active,
-          id: project?.id,
-          name: name,
-          label_value: label,
-          threshold: threshold,
-          expiry: expiry,
-        },
-      });
-      console.log("Update Project Resp", resp);
-    };
-    callUpdateProjectApi();
-    onClose();
-  };
-
-  const editProject = (project: any) => {
-    setDrawerTitle("Edit Project");
-    console.log("Project", project);
-    setProject(project);
-
-    setThreshold(project.threshold);
-    setName(project.name);
-    setExpiry(project.expiry);
-    setLabel(project.label);
+    setDescription(null);
     onOpen();
   };
 
@@ -235,9 +220,9 @@ const researcher = () => {
       postNewProject({
         project: {
           wallet_id: wallet.publicKey.toBase58(),
-          expiry: expiry,
           label_value: label,
           threshold: threshold,
+          description: description,
           name: name,
         },
       });
@@ -249,10 +234,9 @@ const researcher = () => {
   const handleName = (e: any) => {
     setName(e?.target?.value);
   };
-  const handleExpiry = (e: any) => {
-    setExpiry(e.target?.value);
+  const handleDescription = (e: any) => {
+    setDescription(e.target?.value);
   };
-
   const handleLabel = (e: any) => {
     setLabel(e.target.value);
   };
@@ -269,9 +253,9 @@ const researcher = () => {
     }
   }, []);
   return (
-    <>
+    <Box>
       <SEO />
-      <Container maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>
+      <Container minH="100vh" maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>
         <Stack
           direction={{ base: "column", lg: "row" }}
           spacing={{ base: 0, lg: 8 }}
@@ -285,84 +269,208 @@ const researcher = () => {
             <Stack mb={10}>
               <Flex justifyContent={"space-between"}>
                 <Heading
-                  size={"xl"}
+                  size={"lg"}
                   bgGradient="linear(to-r, #805AD5, #FF0080)"
                   bgClip="text"
                 >
                   Researcher
                 </Heading>
-                <Button
-                  leftIcon={<FaPlus />}
-                  ref={btnRef}
-                  onClick={onCreateProject}
-                >
-                  Create New Project
-                </Button>
               </Flex>
-            </Stack>
-            <TableContainer>
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>Project name</Th>
-                    <Th>Threshold</Th>
-                    <Th>Status</Th>
-                    <Th>Action</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {wallet && projects &&
-                    projects.map((project: any) => {
-                      return (
-                        <Tr key={project.id}>
-                          <Td>{project.name}</Td>
-                          <Td>{project.threshold}%</Td>
-                          <Td>
-                            <Badge
-                              colorScheme={project.active ? `green` : `red`}
+              <Divider orientation="horizontal" />
+              <Box>
+                <SimpleGrid
+                  columns={{ sm: 1, md: 2, xl: 3 }}
+                  spacing="24px"
+                  mb="24px"
+                >
+                  <Card
+                    minH="100px"
+                    borderRadius={"16px"}
+                    variant={"elevated"}
+                    bg={"purple.900"}
+                  >
+                    <CardBody>
+                      <Flex direction="column">
+                        <Flex
+                          flexDirection="row"
+                          align="center"
+                          justify="center"
+                          w="100%"
+                          mb="25px"
+                        >
+                          <Stat me="auto">
+                            <StatLabel
+                              fontSize="xs"
+                              color="gray.400"
+                              fontWeight="bold"
+                              textTransform="uppercase"
                             >
-                              {project.active ? `Active` : `Inactive`}
-                            </Badge>
-                          </Td>
-                          <Td>
-                            <Menu>
-                              <MenuButton
-                                as={IconButton}
-                                aria-label="Options"
-                                icon={<FaEllipsisV />}
-                                variant="outline"
-                              />
-                              <MenuList>
-                                <MenuItem
-                                  icon={<FaUpload />}
-                                  ref={uploadBtnRef}
-                                  onClick={() => onClickOnUpload(project.id)}
-                                >
-                                  Upload
-                                </MenuItem>
-                                <MenuItem
-                                  icon={<FaEdit />}
-                                  onClick={() => editProject(project)}
-                                >
-                                  Edit
-                                </MenuItem>
-                              </MenuList>
-                            </Menu>
-                          </Td>
-                        </Tr>
-                      );
-                    })}
-                </Tbody>
-                <Tfoot>
-                  <Tr>
-                    <Th>Project name</Th>
-                    <Th>Threshold</Th>
-                    <Th>Status</Th>
-                    <Th>Action</Th>
-                  </Tr>
-                </Tfoot>
-              </Table>
-            </TableContainer>
+                              Projects
+                            </StatLabel>
+                            <Flex>
+                              <StatNumber fontSize="lg" fontWeight="bold">
+                                {projects.length}
+                              </StatNumber>
+                            </Flex>
+                          </Stat>
+                          <Icon as={GoProject} h={"32px"} w={"32px"} />
+                        </Flex>
+                      </Flex>
+                    </CardBody>
+                  </Card>
+                  <Card minH="100px" borderRadius={"16px"} variant={"elevated"} bg={"purple.900"}>
+                    <CardBody>
+                      <Flex direction="column">
+                        <Flex
+                          flexDirection="row"
+                          align="center"
+                          justify="center"
+                          w="100%"
+                          mb="25px"
+                        >
+                          <Stat me="auto">
+                            <StatLabel
+                              fontSize="xs"
+                              color="gray.400"
+                              fontWeight="bold"
+                              textTransform="uppercase"
+                            >
+                              Labelled Images
+                            </StatLabel>
+                            <Flex>
+                              <StatNumber fontSize="lg" fontWeight="bold">
+                                {projects?.labelled_images
+                                  ? 0
+                                  : projects?.labelled_images?.length}
+                              </StatNumber>
+                            </Flex>
+                          </Stat>
+                          <Icon as={MdLabelOutline} h={"32px"} w={"32px"} />
+                        </Flex>
+                      </Flex>
+                    </CardBody>
+                  </Card>
+                  <Card
+                    minH="100px"
+                    borderRadius={"16px"}
+                    variant={"elevated"}
+                    bg={"purple.900"}
+                  >
+                    <CardBody>
+                      <Flex direction="column">
+                        <Flex
+                          flexDirection="row"
+                          align="center"
+                          justify="center"
+                          w="100%"
+                          mb="25px"
+                        >
+                          <Stat me="auto">
+                            <StatLabel
+                              fontSize="xs"
+                              color="gray.400"
+                              fontWeight="bold"
+                              textTransform="uppercase"
+                            >
+                              Unlabelled Images
+                            </StatLabel>
+                            <Flex>
+                              <StatNumber
+                                fontSize="lg"
+                                fontWeight="bold"
+                              >
+                                {projects?.unlabelled_images
+                                  ? 0
+                                  : projects?.unlabelled_images?.length}{" "}
+                              </StatNumber>
+                            </Flex>
+                          </Stat>
+                          <Icon
+                            as={MdOutlineLabelOff}
+                            h={"32px"}
+                            w={"32px"}
+                          ></Icon>
+                        </Flex>
+                      </Flex>
+                    </CardBody>
+                  </Card>
+                </SimpleGrid>
+              </Box>
+              <Box>
+                <Card borderRadius={"16px"} bg={"purple.900"}>
+                  <CardHeader>
+                    <Flex justifyContent={"space-between"}>
+                      <Heading size={"md"}>Projects</Heading>
+                      <Button
+                        leftIcon={<FaPlus />}
+                        ref={btnRef}
+                        onClick={onCreateProject}
+                      >
+                        Create New Project
+                      </Button>
+                    </Flex>
+                  </CardHeader>
+                  <CardBody>
+                    <Box>
+                      <TableContainer>
+                        <Table>
+                          <Thead>
+                            <Tr>
+                              <Th>Project name</Th>
+                              <Th>Threshold</Th>
+                              <Th>Status</Th>
+                              <Th>Action</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {wallet &&
+                              projects &&
+                              projects.map((project: any) => {
+                                return (
+                                  <Tr key={project.id}>
+                                    <Td>{project.name}</Td>
+                                    <Td>{project.threshold}%</Td>
+                                    <Td>
+                                      <Tag
+                                        colorScheme={
+                                          project.active ? `green` : `red`
+                                        }
+                                      >
+                                        {project.active ? `Active` : `Inactive`}
+                                      </Tag>
+                                    </Td>
+                                    <Td>
+                                      <Menu>
+                                        <MenuButton
+                                          as={IconButton}
+                                          aria-label="Options"
+                                          icon={<FaEllipsisV />}
+                                          variant="outline"
+                                        />
+                                        <MenuList>
+                                          <MenuItem
+                                            icon={<FaUpload />}
+                                            ref={uploadBtnRef}
+                                            onClick={() =>
+                                              onClickOnUpload(project.id)
+                                            }
+                                          >
+                                            Upload
+                                          </MenuItem>
+                                        </MenuList>
+                                      </Menu>
+                                    </Td>
+                                  </Tr>
+                                );
+                              })}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
+                    </Box>
+                  </CardBody>
+                </Card>
+              </Box>
+            </Stack>
           </Flex>
         </Stack>
         <Drawer
@@ -371,40 +479,35 @@ const researcher = () => {
           onClose={onClose}
           finalFocusRef={btnRef}
         >
-          <DrawerOverlay />
+          <DrawerOverlay  bg="none" backdropFilter="auto" backdropBlur="2px"/>
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader>{drawerTitle}</DrawerHeader>
+            <DrawerHeader>Create New Project</DrawerHeader>
 
             <DrawerBody>
               <Box pt={4}>
-                <Input
-                  placeholder="Project name"
-                  onChange={handleName}
-                  value={name}
-                />
+                <Input placeholder="Project name" onChange={handleName} />
               </Box>
               <Box pt={4}>
                 <Input
                   placeholder="Label name eg: bus, car..."
                   onChange={handleLabel}
-                  value={label}
                 />
               </Box>
               <Box pt={4}>
                 <Input
                   placeholder="Threshold"
                   onChange={handleThreshold}
-                  value={threshold}
+                  min={0}
+                  max={100}
+                  type={"number"}
                 />
               </Box>
               <Box pt={4}>
-                <Input
-                  placeholder="Expiry of the project"
-                  type={"date"}
+                <Textarea
+                  placeholder="Anything you want to add about project..."
                   borderColor={"secondary.700"}
-                  onChange={handleExpiry}
-                  value={expiry}
+                  onChange={handleDescription}
                 />
               </Box>
             </DrawerBody>
@@ -413,14 +516,7 @@ const researcher = () => {
               <Button variant="primary" mr={3} onClick={onClose} key="cancel">
                 Cancel
               </Button>
-              <Button
-                onClick={
-                  drawerTitle === "Edit Project"
-                    ? updateProjectStatus
-                    : createNewProject
-                }
-                key="submit"
-              >
+              <Button onClick={createNewProject} key="submit">
                 Submit
               </Button>
             </DrawerFooter>
@@ -545,7 +641,7 @@ const researcher = () => {
           </DrawerContent>
         </Drawer>
       </Container>
-    </>
+    </Box>
   );
 };
 

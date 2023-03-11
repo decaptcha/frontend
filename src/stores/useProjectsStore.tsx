@@ -5,16 +5,18 @@ const useProjectsStore = create()((set) => ({
   project: "",
   projectId: "",
   name: "",
-  expiry: "",
   threshold: "",
   label: "",
+  active: false,
+  description: "",
   setProjects: (data: any) => set({ projects: data }),
   setProject: (data: any) => set({ project: data }),
   setProjectId: (data: any) => set({ projectId: data }),
   setName: (data: any) => set({ name: data }),
   setLabel: (data: any) => set({ label: data }),
   setThreshold: (data: any) => set({ threshold: data }),
-  setExpiry: (data: any) => set({ expiry: data }),
+  setDescription: (data: any) => set({ description: data }),
+  setActive: (data: any) => set({ active: data })
 }));
 
 export default useProjectsStore;

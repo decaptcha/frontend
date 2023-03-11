@@ -24,7 +24,7 @@ const developer = () => {
     }
   }, []);
   return (
-    <>
+    <Box minH="100vh">
       <Container maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>
         <Stack
           direction={{ base: "column", lg: "row" }}
@@ -58,7 +58,7 @@ const developer = () => {
           </Flex>
         </Stack>
       </Container>
-    </>
+    </Box>
   );
 };
 

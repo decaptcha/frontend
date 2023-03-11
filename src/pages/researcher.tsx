@@ -311,7 +311,7 @@ const researcher = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {wallet &&
+                  {wallet && projects &&
                     projects.map((project: any) => {
                       return (
                         <Tr key={project.id}>

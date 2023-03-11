@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardBody,
   useColorModeValue,
+  CardFooter,
 } from "@chakra-ui/react";
 import {
   Box,
@@ -102,6 +103,7 @@ const researcher = () => {
                   onChange={getProjectInformation}
                 >
                   {wallet &&
+                    projects &&
                     projects.map((project: any) => {
                       return <option value={project.id}>{project.name}</option>;
                     })}
@@ -110,34 +112,49 @@ const researcher = () => {
             </Stack>
             {project && (
               <Stack spacing={8} direction="row">
-                <Card p={2} shadow="md" width={"full"}>
-                  <CardHeader>
-                    <Flex justifyContent={"space-between"}>
-                      <Heading fontSize="xl">{project.name}</Heading>
-                      <Tag colorScheme={project.active ? `green` : `red`}>
-                        {project.active ? `Active` : `Inactive`}
-                      </Tag>
-                    </Flex>
-                  </CardHeader>
-                  <CardBody>
-                    <Tag colorScheme={`purple`} m={2} borderRadius={25}>
-                      {project.threshold}%
-                    </Tag>
-                    {project.expiry && (
+                <Card
+                  direction={{ base: "column", sm: "row" }}
+                  overflow="hidden"
+                  variant="outline"
+                >
+                  <Image
+                    objectFit="cover"
+                    maxW={{ base: "100%", sm: "200px" }}
+                    src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                    alt="Caffe Latte"
+                  />
+
+                  <Stack m={2}>
+                    <CardHeader>
+                      <Flex justifyContent={"space-between"}>
+                        <Heading fontSize="xl">{project.name}</Heading>
+                        <Tag colorScheme={project.active ? `green` : `red`}>
+                          {project.active ? `Active` : `Inactive`}
+                        </Tag>
+                      </Flex>
+                    </CardHeader>
+
+                    <CardBody>
+                      <Text py="2">{project?.description}</Text>
                       <Tag colorScheme={`purple`} m={2} borderRadius={25}>
-                        {project.expiry} in Days
+                        Threshold : {project.threshold}%
                       </Tag>
-                    )}
-                  </CardBody>
+                      {project.expiry && (
+                        <Tag colorScheme={`purple`} m={2} borderRadius={25}>
+                          {project.expiry} in Days
+                        </Tag>
+                      )}
+                    </CardBody>
+                  </Stack>
                 </Card>
               </Stack>
             )}
 
-            <Box p={4}>
+            <Box m={4}>
               <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
                 <TabList>
-                  <Tab>Labled Dataset</Tab>
-                  <Tab>Unlabled Dataset</Tab>
+                  <Tab>Labelled Dataset</Tab>
+                  <Tab>Unlabelled Dataset</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>

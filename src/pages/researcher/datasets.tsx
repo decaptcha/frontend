@@ -26,6 +26,7 @@ import {
   ModalCloseButton,
   DrawerFooter,
   ModalFooter,
+  Grid,
 } from "@chakra-ui/react";
 import {
   Box,
@@ -60,6 +61,9 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import useProjectsStore from "stores/useProjectsStore";
 import { SEO } from "@/components/SEO";
 import { Navigation } from "@/components/Navigation";
+import { ScatterApp } from "@/components/Charts/Scatter";
+import { Line } from "react-chartjs-2";
+import { LineChart } from "@/components/Charts/Line";
 
 const researcher = () => {
   const {
@@ -78,11 +82,17 @@ const researcher = () => {
   const threshold = useProjectsStore((data: any) => data.threshold);
   const description = useProjectsStore((data: any) => data.description);
   const active = useProjectsStore((data: any) => data.active);
+  const scatterConfidenceAndUsers = useProjectsStore(
+    (data: any) => data.scatterConfidenceAndUsers
+  );
   const setName = useProjectsStore((data: any) => data.setName);
   const setLabel = useProjectsStore((data: any) => data.setLabel);
   const setThreshold = useProjectsStore((data: any) => data.setThreshold);
   const setDescription = useProjectsStore((data: any) => data.setDescription);
   const setActive = useProjectsStore((data: any) => data.setActive);
+  const setScatterConfidenceAndUsers = useProjectsStore(
+    (data: any) => data.setScatterConfidenceAndUsers
+  );
 
   const startProject = (project: any) => {
     onActiveOpen();
@@ -108,6 +118,7 @@ const researcher = () => {
   };
 
   const wallet = useWallet();
+  const { connection } = useConnection();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -166,7 +177,7 @@ const researcher = () => {
       };
       getProjectsFromApi();
     }
-  }, []);
+  }, [wallet, connection]);
   const getProjectInformation = async (e: any) => {
     console.log("Select", e.target.value);
     const data = await fetchProject({
@@ -175,7 +186,53 @@ const researcher = () => {
     });
     console.log("asdmaksd", data["project"]);
     setProject(data["project"]);
+    const populateData = (project: any) => {
+      const data: any = [];
+      project?.unlabelled_images?.forEach((unlabel: any) => {
+        const axis = {
+          x: unlabel?.image_confidence,
+          y: unlabel?.shown_to_users,
+        };
+        data.push(axis);
+      });
+      return data;
+    };
+
+    const scatterConfidenceAndUsers = {
+      datasets: [
+        {
+          label: "Confidence of unlabelled images vs Shown to the users",
+          data: populateData(data["project"]),
+          backgroundColor: "rgba(213, 63, 140, 1)",
+          borderColor: "#fffff",
+        },
+      ],
+    };
+
+    console.log("dara", scatterConfidenceAndUsers);
+    setScatterConfidenceAndUsers(scatterConfidenceAndUsers);
   };
+
+  const lineLabelData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [
+      {
+        label: "First dataset",
+        data: [33, 53, 85, 41, 44, 65],
+        fill: true,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)"
+      },
+      {
+        label: "Second dataset",
+        data: [33, 25, 35, 51, 54, 76],
+        fill: true,
+        borderColor: "#742774"
+      }
+    ]
+  };
+  
+
   return (
     <Box minH="100vh">
       <Container maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>
@@ -291,6 +348,46 @@ const researcher = () => {
                 </Card>
               </Stack>
             )}
+            <Grid templateColumns="repeat(2, 1fr)" gap="20px">
+              <Card>
+                <CardHeader>
+                  <Flex direction="column">
+                    <Text
+                      color="gray.400"
+                      fontSize="sm"
+                      fontWeight="bold"
+                      mb="6px"
+                    >
+                      Labelled vs Unlablelled
+                    </Text>
+                  </Flex>
+                </CardHeader>
+                <CardBody>
+                  <Box>
+                    {project && <LineChart data={lineLabelData} />}
+                  </Box>
+                </CardBody>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <Flex direction="column">
+                    <Text
+                      color="gray.400"
+                      fontSize="sm"
+                      fontWeight="bold"
+                      mb="6px"
+                    >
+                      Unlabelled Images Stats
+                    </Text>
+                  </Flex>
+                </CardHeader>
+                <CardBody>
+                  <Box>
+                    {project && <ScatterApp data={scatterConfidenceAndUsers} />}
+                  </Box>
+                </CardBody>
+              </Card>
+            </Grid>
             {project && (
               <Box m={4}>
                 <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>

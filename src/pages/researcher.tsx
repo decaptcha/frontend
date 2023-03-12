@@ -102,6 +102,7 @@ const researcher = () => {
   const setProjectId = useProjectsStore((data: any) => data.setProjectId);
   const setDescription = useProjectsStore((data: any) => data.setDescription);
   const setActive = useProjectsStore((data: any) => data.setActive);
+  const { connection } = useConnection();
   const wallet = useWallet();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isLoadingL, setIsLoadingL] = useState(false);
@@ -259,7 +260,7 @@ const researcher = () => {
       };
       getProjectsFromApi();
     }
-  }, []);
+  }, [wallet, connection]);
   return (
     <Box>
       <SEO />
@@ -317,7 +318,7 @@ const researcher = () => {
                             </StatLabel>
                             <Flex>
                               <StatNumber fontSize="lg" fontWeight="bold">
-                                {projects.length}
+                                {projects?.length}
                               </StatNumber>
                             </Flex>
                           </Stat>

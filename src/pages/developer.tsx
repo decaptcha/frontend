@@ -9,6 +9,7 @@ const developer = () => {
   const apiKey = useDeveloperApiStore((data: any) => data.api_key);
   const setApiKey = useDeveloperApiStore((data: any) => data.setApiKey);
   const wallet = useWallet();
+  const { connection } = useConnection();
 
   useEffect(() => {
     if (wallet.publicKey) {
@@ -22,7 +23,7 @@ const developer = () => {
       };
       getApiKey();
     }
-  }, []);
+  }, [wallet, connection]);
   return (
     <Box minH="100vh">
       <Container maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>

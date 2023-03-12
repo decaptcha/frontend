@@ -9,6 +9,7 @@ const useProjectsStore = create()((set) => ({
   label: "",
   active: false,
   description: "",
+  scatterConfidenceAndUsers: {},
   setProjects: (data: any) => set({ projects: data }),
   setProject: (data: any) => set({ project: data }),
   setProjectId: (data: any) => set({ projectId: data }),
@@ -16,7 +17,9 @@ const useProjectsStore = create()((set) => ({
   setLabel: (data: any) => set({ label: data }),
   setThreshold: (data: any) => set({ threshold: data }),
   setDescription: (data: any) => set({ description: data }),
-  setActive: (data: any) => set({ active: data })
+  setActive: (data: any) => set({ active: data }),
+  setScatterConfidenceAndUsers: (data: any) =>
+    set({ scatterConfidenceAndUsers: data }),
 }));
 
 export default useProjectsStore;

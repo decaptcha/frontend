@@ -291,7 +291,7 @@ const researcher = () => {
             </Stack>
             {project && (
               <Stack mb={"24px"}>
-                <Card variant="elevated" width={"full"}>
+                <Card bg={"purple.900"} variant="elevated" width={"full"}>
                   <CardHeader>
                     <Flex justifyContent={"space-between"}>
                       <Heading fontSize="xl">{project.name}</Heading>
@@ -348,7 +348,7 @@ const researcher = () => {
             )}
             {project && (
               <Grid templateColumns="repeat(2, 1fr)" gap="20px" mb={"24px"}>
-                <Card>
+                <Card bg={"purple.900"}>
                   <CardHeader>
                     <Flex direction="column">
                       <Text
@@ -367,7 +367,7 @@ const researcher = () => {
                     </Box>
                   </CardBody>
                 </Card>
-                <Card>
+                <Card bg={"purple.900"}>
                   <CardHeader>
                     <Flex direction="column">
                       <Text
@@ -393,14 +393,14 @@ const researcher = () => {
 
             {project && (
               <Stack>
-                <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
+                <Tabs size="md" variant="soft-rounded" colorScheme={"purple"} >
                   <TabList>
                     <Tab>Labelled Dataset</Tab>
                     <Tab>Unlabelled Dataset</Tab>
                   </TabList>
                   <TabPanels>
                     <TabPanel>
-                      <TableContainer>
+                      <TableContainer bg={"purple.900"}>
                         <Table variant="simple">
                           <Thead>
                             <Tr>
@@ -454,7 +454,7 @@ const researcher = () => {
                       </TableContainer>
                     </TabPanel>
                     <TabPanel>
-                      <TableContainer>
+                      <TableContainer bg={"purple.900"}>
                         <Table variant="simple">
                           <Thead>
                             <Tr>

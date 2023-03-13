@@ -27,6 +27,7 @@ import {
   DrawerFooter,
   ModalFooter,
   Grid,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import {
   Box,
@@ -93,7 +94,13 @@ const researcher = () => {
   const setScatterConfidenceAndUsers = useProjectsStore(
     (data: any) => data.setScatterConfidenceAndUsers
   );
+  const setLablelAndUnlabelData = useProjectsStore(
+    (data: any) => data.setLablelAndUnlabelData
+  );
 
+  const lablelAndUnlabelData = useProjectsStore(
+    (data: any) => data.lablelAndUnlabelData
+  );
   const startProject = (project: any) => {
     onActiveOpen();
   };
@@ -195,43 +202,52 @@ const researcher = () => {
         };
         data.push(axis);
       });
-      return data;
+      const scatterConfidenceAndUsers = {
+        labels: project?.unlabelled_images?.map((label: any) => label.name),
+        datasets: [
+          {
+            label: "Confidence of unlabelled images vs Shown to the users",
+            data: data,
+            backgroundColor: "rgba(213, 63, 140, 1)",
+            pointRadius: 6,
+          },
+        ],
+      };
+      return scatterConfidenceAndUsers;
     };
 
-    const scatterConfidenceAndUsers = {
-      datasets: [
-        {
-          label: "Confidence of unlabelled images vs Shown to the users",
-          data: populateData(data["project"]),
-          backgroundColor: "rgba(213, 63, 140, 1)",
-          borderColor: "#fffff",
-        },
-      ],
+    console.log("dara", populateData(data["project"]));
+    setScatterConfidenceAndUsers(populateData(data["project"]));
+
+    const populateLineData = (project: any) => {
+      const lineLabelData = {
+        labels: project?.labelled_images?.map((label: any) => label.name),
+        datasets: [
+          {
+            label: "Labelled dataset",
+            data: project?.labelled_images?.map((label: any) => label.clicks),
+            fill: true,
+            backgroundColor: "rgba(128, 90, 213, 0.2)",
+            borderColor: "rgba(128, 90, 213,1)",
+          },
+          {
+            label: "Unlabelled dataset",
+            data: project?.unlabelled_images?.map(
+              (unlabel: any) => unlabel.clicks
+            ),
+            fill: true,
+            borderColor: "rgba(255, 0, 128,1)",
+            backgroundColor: "rgba(255, 0, 128, 0.2)",
+          },
+        ],
+      };
+      return lineLabelData;
     };
 
-    console.log("dara", scatterConfidenceAndUsers);
-    setScatterConfidenceAndUsers(scatterConfidenceAndUsers);
+    populateLineData(data["project"]);
+    console.log(populateLineData(data["project"]));
+    setLablelAndUnlabelData(populateLineData(data["project"]));
   };
-
-  const lineLabelData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "First dataset",
-        data: [33, 53, 85, 41, 44, 65],
-        fill: true,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)"
-      },
-      {
-        label: "Second dataset",
-        data: [33, 25, 35, 51, 54, 76],
-        fill: true,
-        borderColor: "#742774"
-      }
-    ]
-  };
-  
 
   return (
     <Box minH="100vh">
@@ -257,7 +273,7 @@ const researcher = () => {
                 </Heading>
               </Flex>
             </Stack>
-            <Stack mt={"4px"}>
+            <Stack mb={"24px"}>
               <Flex justifyContent={"space-between"}>
                 <Select
                   placeholder="Select Project to view dataset"
@@ -274,59 +290,41 @@ const researcher = () => {
               </Flex>
             </Stack>
             {project && (
-              <Stack direction="row">
-                <Card
-                  direction={{ base: "column", sm: "row" }}
-                  overflow="hidden"
-                  variant="elevated"
-                  width={"full"}
-                >
-                  <Image
-                    w={128}
-                    h={128}
-                    src={project?.labelled_images?.[0]?.url}
-                    alt={project?.label_value}
-                    borderRadius={"4px"}
-                  />
-
-                  <Stack width={"full"}>
-                    <CardHeader>
-                      <Flex justifyContent={"space-between"}>
-                        <Heading fontSize="xl">{project.name}</Heading>
-                        <Tag
-                          colorScheme={
-                            project.active && !project.is_completed
-                              ? `yellow`
-                              : !project.active && !project.is_completed
-                              ? `red`
-                              : `green`
-                          }
-                        >
-                          {project.active && !project.is_completed
-                            ? `Ongoing`
+              <Stack mb={"24px"}>
+                <Card variant="elevated" width={"full"}>
+                  <CardHeader>
+                    <Flex justifyContent={"space-between"}>
+                      <Heading fontSize="xl">{project.name}</Heading>
+                      <Tag
+                        colorScheme={
+                          project.active && !project.is_completed
+                            ? `yellow`
                             : !project.active && !project.is_completed
-                            ? `Not Started`
-                            : `Completed`}
-                        </Tag>
-                      </Flex>
-                    </CardHeader>
+                            ? `red`
+                            : `green`
+                        }
+                      >
+                        {project.active && !project.is_completed
+                          ? `Ongoing`
+                          : !project.active && !project.is_completed
+                          ? `Not Started`
+                          : `Completed`}
+                      </Tag>
+                    </Flex>
+                  </CardHeader>
 
-                    <CardBody>
-                      {project?.description && (
-                        <Text>{project?.description}</Text>
-                      )}
-                      {project?.threshold && (
-                        <Tag colorScheme={`purple`} borderRadius={25}>
-                          Threshold : {project?.threshold}%
-                        </Tag>
-                      )}
-                      {project?.expiry && (
-                        <Tag colorScheme={`purple`} borderRadius={25}>
-                          {project?.expiry} in Days
-                        </Tag>
-                      )}
-                    </CardBody>
-                    <CardFooter>
+                  <CardBody>
+                    {project?.description && (
+                      <Text>{project?.description}</Text>
+                    )}
+                    {project?.threshold && (
+                      <Tag colorScheme={`purple`} borderRadius={25}>
+                        Threshold : {project?.threshold}%
+                      </Tag>
+                    )}
+                  </CardBody>
+                  <CardFooter>
+                    <ButtonGroup spacing="2">
                       <Button
                         variant={"outline"}
                         leftIcon={<FaEdit />}
@@ -343,53 +341,58 @@ const researcher = () => {
                           Start Project
                         </Button>
                       )}
-                    </CardFooter>
-                  </Stack>
+                    </ButtonGroup>
+                  </CardFooter>
                 </Card>
               </Stack>
             )}
-            <Grid templateColumns="repeat(2, 1fr)" gap="20px">
-              <Card>
-                <CardHeader>
-                  <Flex direction="column">
-                    <Text
-                      color="gray.400"
-                      fontSize="sm"
-                      fontWeight="bold"
-                      mb="6px"
-                    >
-                      Labelled vs Unlablelled
-                    </Text>
-                  </Flex>
-                </CardHeader>
-                <CardBody>
-                  <Box>
-                    {project && <LineChart data={lineLabelData} />}
-                  </Box>
-                </CardBody>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <Flex direction="column">
-                    <Text
-                      color="gray.400"
-                      fontSize="sm"
-                      fontWeight="bold"
-                      mb="6px"
-                    >
-                      Unlabelled Images Stats
-                    </Text>
-                  </Flex>
-                </CardHeader>
-                <CardBody>
-                  <Box>
-                    {project && <ScatterApp data={scatterConfidenceAndUsers} />}
-                  </Box>
-                </CardBody>
-              </Card>
-            </Grid>
             {project && (
-              <Box m={4}>
+              <Grid templateColumns="repeat(2, 1fr)" gap="20px" mb={"24px"}>
+                <Card>
+                  <CardHeader>
+                    <Flex direction="column">
+                      <Text
+                        color="gray.400"
+                        fontSize="sm"
+                        fontWeight="bold"
+                        mb="6px"
+                      >
+                        Labelled vs Unlablelled
+                      </Text>
+                    </Flex>
+                  </CardHeader>
+                  <CardBody>
+                    <Box>
+                      {project && <LineChart data={lablelAndUnlabelData} />}
+                    </Box>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <Flex direction="column">
+                      <Text
+                        color="gray.400"
+                        fontSize="sm"
+                        fontWeight="bold"
+                        mb="6px"
+                      >
+                        Unlabelled Images Stats
+                      </Text>
+                    </Flex>
+                  </CardHeader>
+                  <CardBody>
+                    <Box>
+                      {project && (
+                        <ScatterApp data={scatterConfidenceAndUsers} />
+                      )}
+                    </Box>
+                  </CardBody>
+                </Card>
+              </Grid>
+            )}
+
+            {project && (
+              <Stack>
                 <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
                   <TabList>
                     <Tab>Labelled Dataset</Tab>
@@ -484,8 +487,8 @@ const researcher = () => {
                                           flexWrap="nowrap"
                                         >
                                           <Image
-                                            h={"128px"}
-                                            w={"128px"}
+                                            h={"64x"}
+                                            w={"64px"}
                                             me={"18px"}
                                             key={label.id}
                                             src={label.url}
@@ -523,7 +526,7 @@ const researcher = () => {
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
-              </Box>
+              </Stack>
             )}
           </Flex>
         </Stack>

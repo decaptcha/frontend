@@ -13,14 +13,26 @@ import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-
-export const options = {
+const options = {
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      position: "top" as const,
+      labels: {
+        color: "#CBD5E0",
+      },
+    },
+  },
   scales: {
     y: {
-      grid: {
-        color: "#ffffff"
-      },
+      ticks: { color: "#CBD5E0", beginAtZero: true },
       beginAtZero: true,
+      max: 100,
+    },
+    x: {
+      ticks: { color: "#CBD5E0", beginAtZero: true },
+      max: 100,
     },
   },
 };
@@ -39,5 +51,5 @@ export const data = {
 };
 
 export function ScatterApp({ data }: { data: any }) {
-  return <Scatter data={data} />;
+  return <Scatter data={data} options={options} />;
 }

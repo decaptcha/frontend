@@ -1,4 +1,4 @@
-export const API_URL = "https://597c-45-64-12-244.in.ngrok.io";
+export const API_URL = "https://dd22-45-64-12-244.in.ngrok.io";
 
 export type Repo = {
   id: string;

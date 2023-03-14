@@ -84,7 +84,7 @@ function App({ Component, pageProps, router }: AppProps) {
 
                   <Header />
                   <Component {...pageProps} />
-                  <Footer />
+                  {/* <Footer /> */}
                 </div>
               </CustomCursorManager>
             </WalletModalProvider>

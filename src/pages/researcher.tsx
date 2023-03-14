@@ -230,6 +230,8 @@ const researcher = () => {
           description: description,
           name: name,
         },
+      }).then(() => {
+        getProjectsFromApi();
       });
     }
   };
@@ -245,19 +247,19 @@ const researcher = () => {
   const handleLabel = (e: any) => {
     setLabel(e.target.value);
   };
+  const getProjectsFromApi : any = async () => {
+    const data = await fetchProjects({
+      walletId: wallet?.publicKey?.toBase58(),
+    });
+    console.log(data["projects"]);
+    setProjects(data["projects"]);
+    setActiveProjectsCount(data["active_projects"]);
+    setInactiveProjectsCount(data["inactive_projects"]);
+    console.log(projects);
+  };
   useEffect(() => {
     if (wallet.publicKey) {
       console.log("wallet", wallet.publicKey.toBase58());
-      const getProjectsFromApi = async () => {
-        const data = await fetchProjects({
-          walletId: wallet?.publicKey?.toBase58(),
-        });
-        console.log(data["projects"]);
-        setProjects(data["projects"]);
-        setActiveProjectsCount(data["active_projects"]);
-        setInactiveProjectsCount(data["inactive_projects"]);
-        console.log(projects);
-      };
       getProjectsFromApi();
     }
   }, [wallet, connection]);

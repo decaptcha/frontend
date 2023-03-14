@@ -17,8 +17,8 @@ const Home: NextPage = () => {
       <SEO />
       <Hero  />
       <Integration />
-      <GettingStarted />
-      <ExploreTemplates />
+      {/* <GettingStarted /> */}
+      {/* <ExploreTemplates /> */}
     </>
   );
 };

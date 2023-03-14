@@ -23,7 +23,7 @@ export const data: Array<NavItem> = [
   },
   {
     label: "Redeem",
-    href: `/developer`,
+    href: `/redeem`,
     icon: <FaConnectdevelop />,
     passHref: true,
   },

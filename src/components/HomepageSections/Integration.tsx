@@ -18,6 +18,7 @@ import {
 
 import { TextUnderline } from "@/components/TextUnderline";
 import { FaRocket } from "react-icons/fa";
+import { CopyBlock, dracula, solarizedDark } from "react-code-blocks";
 
 export const Integration = () => {
   return (
@@ -42,8 +43,9 @@ export const Integration = () => {
           </Text>
         </Stack>
 
-        <Flex justify={"center"} align={"center"}>
-          <Stack
+        
+        {/* <Flex justify={"center"} align={"center"}> */}
+          {/* <Stack
             key={"dumm"}
             bg={useColorModeValue("gray.100", "gray.900")}
             rounded={"xl"}
@@ -52,16 +54,16 @@ export const Integration = () => {
             direction={"row"}
             align={"center"}
             justify={"space-between"}
-          >
-            <Stack direction={"row"} align={"center"}>
-              <Flex wrap="wrap" gap={8} p={8}>
-                <Code colorScheme="purple" fontSize={"16px"}>
-                  {`<script src="https://cdn.jsdelivr.net/gh/decaptcha/sdk/github-cdn/decaptcha.js" type="text/javascript"></script>`}
-                </Code>
-              </Flex>
-            </Stack>
-          </Stack>
-        </Flex>
+          > */}
+            <CopyBlock
+                  language="html"
+                  text={`<script src="https://cdn.jsdelivr.net/gh/decaptcha/sdk/github-cdn/decaptcha.js" type="text/javascript"></script>`}
+                  codeBlock
+                  theme={dracula}
+                  showLineNumbers={false}
+            />
+          {/* </Stack> */}
+        {/* </Flex> */}
       </SimpleGrid>
     </Container>
   );

@@ -11,6 +11,7 @@ import {
 import { IoArrowForward, IoCheckmarkSharp } from "react-icons/io5";
 import NextLink from "next/link";
 import { FC } from "react";
+import styled from "styled-components";
 
 import { TextUnderline } from "@/components/TextUnderline";
 import { HeroComponents } from "@/components/HomepageSections/HeroComponents";
@@ -20,6 +21,14 @@ import {
   TEMPLATES_LINK,
 } from "../../constants";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { Earth } from "../Earth";
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+
+const CanvasContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const confetti = {
   light: {
@@ -40,9 +49,9 @@ const CONFETTI_DARK = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2
 export const Hero = () => {
   return (
     <Box
-      bg={useColorModeValue("gray.100", "gray.900")}
+      bg={useColorModeValue("gray.100", "black")}
       css={{
-        backgroundImage: useColorModeValue(CONFETTI_LIGHT, CONFETTI_DARK),
+        // backgroundImage: useColorModeValue(CONFETTI_LIGHT, CONFETTI_DARK),
         backgroundAttachment: "fixed",
       }}
     >
@@ -56,7 +65,7 @@ export const Hero = () => {
         direction={{ base: "column", lg: "row" }}
         alignItems={"center"}
       >
-        <Stack spacing={12} mb={{ base: 12, lg: 0 }} flex={2}>
+        <Stack spacing={12} mb={{ base: 12, lg: 0 }} flex={2} direction='column'>
           <Heading
             as={"h2"}
             fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
@@ -77,7 +86,16 @@ export const Hero = () => {
               New way of defining captcha
             </Text>
           </Stack>
-          <Stack direction={{ base: "column", sm: "row" }} spacing={8}>
+          {/* <Stack spacing={5}>
+          <CanvasContainer>
+            <Canvas>
+              <Suspense fallback={null}>
+                <Earth />
+              </Suspense>
+            </Canvas>
+          </CanvasContainer>
+          </Stack> */}
+          {/* <Stack direction={{ base: "column", sm: "row" }} spacing={8}>
             <WalletMultiButton />
             <Button
               data-splitbee-event={SPLITBEE_HERO_SUGGEST_TEMPLATE}
@@ -97,10 +115,8 @@ export const Hero = () => {
             >
               Documentation
             </Button>
-          </Stack>
+          </Stack> */}
         </Stack>
-
-        <HeroComponents />
       </Stack>
     </Box>
   );

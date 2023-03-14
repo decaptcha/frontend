@@ -33,11 +33,11 @@ export const Header = () => {
         zIndex="999"
         justify={"center"}
         css={{
-          backdropFilter: "saturate(180%) blur(5px)",
-          backgroundColor: useColorModeValue(
-            "rgba(255, 255, 255, 0.8)",
-            "rgba(26, 32, 44, 0.8)"
-          ),
+          backdropFilter: "saturate(120%) blur(5px)",
+          // backgroundColor: useColorModeValue(
+          //   "rgba(255, 255, 255, 0.8)",
+          //   "rgba(0, 0, 0, 0.8)"
+          // ),
         }}
       >
         <Container as={Flex} maxW={"7xl"} align={"center"}>

@@ -65,6 +65,7 @@ import { Navigation } from "@/components/Navigation";
 import { ScatterApp } from "@/components/Charts/Scatter";
 import { Line } from "react-chartjs-2";
 import { LineChart } from "@/components/Charts/Line";
+import { useToast } from "@chakra-ui/react";
 
 const researcher = () => {
   const {
@@ -100,6 +101,8 @@ const researcher = () => {
   const setLablelAndUnlabelData = useProjectsStore(
     (data: any) => data.setLablelAndUnlabelData
   );
+
+  const toast = useToast();
 
   const lablelAndUnlabelData = useProjectsStore(
     (data: any) => data.lablelAndUnlabelData
@@ -153,7 +156,31 @@ const researcher = () => {
       });
       console.log("Update Project Resp", resp);
     };
-    callUpdateProjectApi();
+    callUpdateProjectApi()
+      .then((res) => {
+        const explorerLink = `https://explorer.solana.com/address/${res?.mint}?cluster=devnet`;
+        const openLink = `<Link href='https://chakra-ui.com' isExternal>
+      Chakra Design system <ExternalLinkIcon mx='2px' />
+    </Link>`;
+        toast({
+          position: "top-right",
+          title: `Activated Project`,
+          description: `Project has been activated. Verify on Solana Explorer: ${explorerLink}.`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        toast({
+          position: "top-right",
+          title: `Error while activating project`,
+          description: `${err?.message}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
     onClose();
   };
   const getProjectsFromApi = async () => {
@@ -211,13 +238,13 @@ const researcher = () => {
       const lineLabelData = {
         labels: project?.labelled_images?.map((label: any) => label.name),
         datasets: [
-          {
-            label: "Labelled dataset",
-            data: project?.labelled_images?.map((label: any) => label.clicks),
-            fill: true,
-            backgroundColor: "rgba(128, 90, 213, 0.2)",
-            borderColor: "rgba(128, 90, 213,1)",
-          },
+          // {
+          //   label: "Labelled dataset",
+          //   data: project?.labelled_images?.map((label: any) => label.clicks),
+          //   fill: true,
+          //   backgroundColor: "rgba(128, 90, 213, 0.2)",
+          //   borderColor: "rgba(128, 90, 213,1)",
+          // },
           {
             label: "Unlabelled dataset",
             data: project?.unlabelled_images?.map(
@@ -339,24 +366,26 @@ const researcher = () => {
                     )}
                   </CardBody>
                   <CardFooter>
-                    <ButtonGroup spacing="2">
-                      <Button
-                        variant={"outline"}
-                        leftIcon={<FaEdit />}
-                        onClick={() => editProject(project)}
-                      >
-                        Edit
-                      </Button>
-                      {project?.active === false && (
+                    {project?.is_completed == false && (
+                      <ButtonGroup spacing="2">
                         <Button
                           variant={"outline"}
-                          leftIcon={<FaRocket />}
-                          onClick={() => startProject(project)}
+                          leftIcon={<FaEdit />}
+                          onClick={() => editProject(project)}
                         >
-                          Start Project
+                          Edit
                         </Button>
-                      )}
-                    </ButtonGroup>
+                        {project?.active === false && (
+                          <Button
+                            variant={"outline"}
+                            leftIcon={<FaRocket />}
+                            onClick={() => startProject(project)}
+                          >
+                            Start Project
+                          </Button>
+                        )}
+                      </ButtonGroup>
+                    )}
                   </CardFooter>
                 </Card>
               </Stack>
@@ -372,7 +401,7 @@ const researcher = () => {
                         fontWeight="bold"
                         mb="6px"
                       >
-                        Labelled vs Unlablelled
+                        Labelled vs Unlabelled
                       </Text>
                     </Flex>
                   </CardHeader>
@@ -410,64 +439,10 @@ const researcher = () => {
               <Stack>
                 <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
                   <TabList>
-                    <Tab>Labelled Dataset</Tab>
                     <Tab>Unlabelled Dataset</Tab>
+                    <Tab>Labelled Dataset</Tab>
                   </TabList>
                   <TabPanels>
-                    <TabPanel>
-                      <TableContainer bg={"purple.900"}>
-                        <Table variant="simple">
-                          <Thead>
-                            <Tr>
-                              <Th>Label name</Th>
-                              <Th>Clicks</Th>
-                              <Th>Shown to Users</Th>
-                            </Tr>
-                          </Thead>
-                          <Tbody>
-                            {wallet &&
-                              project &&
-                              project?.["labelled_images"]?.map(
-                                (label: any) => {
-                                  return (
-                                    <Tr key={label?.id}>
-                                      <Td>
-                                        <Flex
-                                          alignItems="center"
-                                          py=".8rem"
-                                          minWidth="100%"
-                                          flexWrap="nowrap"
-                                        >
-                                          <Image
-                                            h={"64px"}
-                                            w={"64px"}
-                                            me="18px"
-                                            key={label?.id}
-                                            src={label?.url}
-                                            alt={label?.name}
-                                            fallbackSrc="https://via.placeholder.com/150"
-                                            borderRadius={"4px"}
-                                          />
-                                          {label?.name}
-                                        </Flex>
-                                      </Td>
-                                      <Td>{label?.clicks}</Td>
-                                      <Td>{label?.["shown_to_users"]}</Td>
-                                    </Tr>
-                                  );
-                                }
-                              )}
-                          </Tbody>
-                          <Tfoot>
-                            <Tr>
-                              <Th>Label name</Th>
-                              <Th>Clicks</Th>
-                              <Th>Shown to Users</Th>
-                            </Tr>
-                          </Tfoot>
-                        </Table>
-                      </TableContainer>
-                    </TabPanel>
                     <TabPanel>
                       <TableContainer bg={"purple.900"}>
                         <Table variant="simple">
@@ -534,6 +509,60 @@ const researcher = () => {
                               <Th>Clicks</Th>
                               <Th>Shown to Users</Th>
                               <Th>Confidence</Th>
+                            </Tr>
+                          </Tfoot>
+                        </Table>
+                      </TableContainer>
+                    </TabPanel>
+                    <TabPanel>
+                      <TableContainer bg={"purple.900"}>
+                        <Table variant="simple">
+                          <Thead>
+                            <Tr>
+                              <Th>Label name</Th>
+                              <Th>Clicks</Th>
+                              <Th>Shown to Users</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {wallet &&
+                              project &&
+                              project?.["labelled_images"]?.map(
+                                (label: any) => {
+                                  return (
+                                    <Tr key={label?.id}>
+                                      <Td>
+                                        <Flex
+                                          alignItems="center"
+                                          py=".8rem"
+                                          minWidth="100%"
+                                          flexWrap="nowrap"
+                                        >
+                                          <Image
+                                            h={"64px"}
+                                            w={"64px"}
+                                            me="18px"
+                                            key={label?.id}
+                                            src={label?.url}
+                                            alt={label?.name}
+                                            fallbackSrc="https://via.placeholder.com/150"
+                                            borderRadius={"4px"}
+                                          />
+                                          {label?.name}
+                                        </Flex>
+                                      </Td>
+                                      <Td>{label?.clicks}</Td>
+                                      <Td>{label?.["shown_to_users"]}</Td>
+                                    </Tr>
+                                  );
+                                }
+                              )}
+                          </Tbody>
+                          <Tfoot>
+                            <Tr>
+                              <Th>Label name</Th>
+                              <Th>Clicks</Th>
+                              <Th>Shown to Users</Th>
                             </Tr>
                           </Tfoot>
                         </Table>

@@ -20,7 +20,7 @@ export const theme = extendTheme({
       "::selection": {
         userSelect: "none",
         color: "#fff",
-        background: "purple.700",
+        background: "gray.900",
       },
       "html, #__next": {
         height: "100%",

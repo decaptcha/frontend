@@ -1,7 +1,7 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 export const theme = extendTheme({
-  config: { useSystemColorMode: true, initialColorMode: "dark" },
+  config: { useSystemColorMode: false, initialColorMode: "dark" },
   fonts: {
     body: `'Kumbh Sans', sans-serif`,
     heading: `'Kumbh Sans', sans-serif`,

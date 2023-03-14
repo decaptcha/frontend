@@ -75,6 +75,7 @@ const researcher = () => {
   const disclosure = useDisclosure();
   const datasetDisclosure = useDisclosure();
   const project = useProjectsStore((data: any) => data.project);
+  const projectId = useProjectsStore((data: any) => data.projectId);
   const projects = useProjectsStore((data: any) => data.projects);
   const setProjects = useProjectsStore((data: any) => data.setProjects);
   const setProject = useProjectsStore((data: any) => data.setProject);
@@ -91,6 +92,8 @@ const researcher = () => {
   const setThreshold = useProjectsStore((data: any) => data.setThreshold);
   const setDescription = useProjectsStore((data: any) => data.setDescription);
   const setActive = useProjectsStore((data: any) => data.setActive);
+  const setProjectId = useProjectsStore((data: any) => data.setProjectId);
+
   const setScatterConfidenceAndUsers = useProjectsStore(
     (data: any) => data.setScatterConfidenceAndUsers
   );
@@ -166,11 +169,15 @@ const researcher = () => {
       getProjectsFromApi();
     }
   }, [wallet, connection]);
-  const getProjectInformation = async (e: any) => {
+  const selectProject = async (e: any) => {
     console.log("Select", e.target.value);
+    setProjectId(e.target.value);
+    getProjectInformation(e.target.value);
+  };
+  const getProjectInformation = async (projectId: any) => {
     const data = await fetchProject({
       walletId: wallet?.publicKey?.toBase58(),
-      projectId: e.target.value,
+      projectId: projectId,
     });
     console.log("asdmaksd", data["project"]);
     setProject(data["project"]);
@@ -246,7 +253,7 @@ const researcher = () => {
       console.log("Update Project Resp", resp);
     };
     callUpdateProjectApi().then(() => {
-      getProjectInformation();
+      getProjectInformation(projectId);
     });
     onActiveClose();
   };
@@ -279,7 +286,7 @@ const researcher = () => {
               <Flex justifyContent={"space-between"}>
                 <Select
                   placeholder="Select Project to view dataset"
-                  onChange={getProjectInformation}
+                  onChange={selectProject}
                 >
                   {wallet &&
                     projects &&

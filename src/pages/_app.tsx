@@ -33,7 +33,10 @@ import { Footer } from "@/components/Footer";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
+import CustomCursorManager from "@/components/CustomCursor/context/manager";
+import CustomCursor from "@/components/CustomCursor";
 
+import "../components/CustomCursor/style.scss";
 const inIframe = () => window.location !== window.parent.location;
 
 function App({ Component, pageProps, router }: AppProps) {
@@ -75,9 +78,15 @@ function App({ Component, pageProps, router }: AppProps) {
           </Head>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletModalProvider>
-              <Header />
-              <Component {...pageProps} />
-              <Footer />
+              <CustomCursorManager>
+                <div className="page-wrapper">
+                  <CustomCursor />
+
+                  <Header />
+                  <Component {...pageProps} />
+                  <Footer />
+                </div>
+              </CustomCursorManager>
             </WalletModalProvider>
           </WalletProvider>
         </ThemeEditorProvider>

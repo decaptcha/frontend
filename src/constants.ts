@@ -11,7 +11,7 @@ export const DISCORD_INVITE_LINK = "https://discord.gg/4Y3bQk6sTb";
 export const GITHUB_LINK = "https://github.com/hauptrolle/chakra-templates";
 export const ANALYTICS_LINK =
   "https://app.splitbee.io/public/chakra-templates.dev";
-export const TWITTER_LINK = "https://twitter.com/ChakraTemplates";
+export const TWITTER_LINK = "https://twitter.com/deCaptchaHQ";
 export const FIGMA_LINK =
   "https://www.figma.com/community/file/935959613109017886/Chakra-Templates-UI-Kit";
 export const CONTRIBUTORS_LINK =

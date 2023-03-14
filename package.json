@@ -49,6 +49,7 @@
     "react-icons": "^4.8.0",
     "react-lottie": "^1.2.3",
     "react-slick": "^0.29.0",
+    "sass": "^1.59.2",
     "yarn": "^1.22.19",
     "zustand": "^4.3.6"
   },

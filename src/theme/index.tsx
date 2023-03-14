@@ -14,7 +14,11 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
+      "*": {
+        cursor: "none",
+      },
       "::selection": {
+        userSelect: "none",
         color: "#fff",
         background: "purple.700",
       },

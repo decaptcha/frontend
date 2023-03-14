@@ -105,25 +105,6 @@ const researcher = () => {
     onActiveOpen();
   };
 
-  const confirmStartProject = (project: any) => {
-    const callUpdateProjectApi = async () => {
-      const resp = await updateProjectApi({
-        project: {
-          wallet_id: wallet?.publicKey?.toBase58(),
-          id: project?.id,
-          name: project?.name,
-          label_value: project?.label_value,
-          threshold: project?.threshold,
-          description: project?.description,
-          active: true,
-        },
-      });
-      console.log("Update Project Resp", resp);
-    };
-    callUpdateProjectApi();
-    onActiveClose();
-  };
-
   const wallet = useWallet();
   const { connection } = useConnection();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -172,16 +153,16 @@ const researcher = () => {
     callUpdateProjectApi();
     onClose();
   };
-
+  const getProjectsFromApi = async () => {
+    const data = await fetchProjects<Response>({
+      walletId: wallet?.publicKey?.toBase58(),
+    });
+    setProjects(data["projects"]);
+  };
   useEffect(() => {
     if (wallet.publicKey) {
       console.log("wallet", wallet.publicKey.toBase58());
-      const getProjectsFromApi = async () => {
-        const data = await fetchProjects<Response>({
-          walletId: wallet?.publicKey?.toBase58(),
-        });
-        setProjects(data["projects"]);
-      };
+
       getProjectsFromApi();
     }
   }, [wallet, connection]);
@@ -249,6 +230,27 @@ const researcher = () => {
     setLablelAndUnlabelData(populateLineData(data["project"]));
   };
 
+  const confirmStartProject = (project: any) => {
+    const callUpdateProjectApi = async () => {
+      const resp = await updateProjectApi({
+        project: {
+          wallet_id: wallet?.publicKey?.toBase58(),
+          id: project?.id,
+          name: project?.name,
+          label_value: project?.label_value,
+          threshold: project?.threshold,
+          description: project?.description,
+          active: true,
+        },
+      });
+      console.log("Update Project Resp", resp);
+    };
+    callUpdateProjectApi().then(() => {
+      getProjectInformation();
+    });
+    onActiveClose();
+  };
+
   return (
     <Box minH="100vh">
       <Container maxW={"7xl"} flex={"1 0 auto"} py={8} mt={20}>
@@ -291,7 +293,13 @@ const researcher = () => {
             </Stack>
             {project && (
               <Stack mb={"24px"}>
-                <Card bg={"purple.900"} variant="elevated" width={"full"}>
+                <Card
+                  bg={"black"}
+                  borderColor={"purple"}
+                  border={"1px"}
+                  variant="elevated"
+                  width={"full"}
+                >
                   <CardHeader>
                     <Flex justifyContent={"space-between"}>
                       <Heading fontSize="xl">{project.name}</Heading>
@@ -393,7 +401,7 @@ const researcher = () => {
 
             {project && (
               <Stack>
-                <Tabs size="md" variant="soft-rounded" colorScheme={"purple"} >
+                <Tabs size="md" variant="soft-rounded" colorScheme={"purple"}>
                   <TabList>
                     <Tab>Labelled Dataset</Tab>
                     <Tab>Unlabelled Dataset</Tab>

@@ -13,7 +13,6 @@ import NextLink from "next/link";
 import NextImage from "next/image";
 import { data } from "../data";
 import {
-  ANALYTICS_LINK,
   DISCORD_INVITE_LINK,
   GITHUB_LINK,
   TWITTER_LINK,
@@ -78,21 +77,6 @@ export const Footer = () => {
             ))}
           </Stack>
 
-          <Stack align={"flex-start"}>
-            <ListHeader>Analytics</ListHeader>
-            <Link href={ANALYTICS_LINK}>Public Statistics</Link>
-            <Link href="https://splitbee.io?ref=chakratemplates">
-              <NextImage
-                src={useColorModeValue(
-                  "https://splitbee.io/splitbee-badge.svg",
-                  "https://splitbee.io/splitbee-badge-dark.svg"
-                )}
-                width={114}
-                height={45}
-                alt="Splitbee Analytics"
-              />
-            </Link>
-          </Stack>
 
           <Stack align={"flex-start"}>
             <ListHeader>Support us</ListHeader>

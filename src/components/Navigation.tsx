@@ -7,6 +7,7 @@ import {
   useColorModeValue,
   HStack,
   Box,
+  Text,
 } from "@chakra-ui/react";
 
 import { data } from "../data";
@@ -16,17 +17,19 @@ const NavigationLink = ({
   href,
   children,
   asPath,
+  comingSoon
 }: {
   href: string;
   children: ReactNode;
   asPath: string;
+  comingSoon: boolean;
 }) => {
   const isActive = asPath === href;
 
   const activeBg = useColorModeValue("purple.50", "purple.900");
 
   return (
-    <Link href={href} passHref>
+    <Link href={comingSoon ? "#" : href} passHref>
       <HStack
         as={"a"}
         fontSize={"m"}
@@ -71,10 +74,16 @@ export const Navigation = (props: StackProps) => {
               asPath={asPath}
               key={category.label}
               href={`${category.href}`}
+              comingSoon={category?.comingSoon}
             >
               <HStack spacing={4}>
                 <Box>{category.icon}</Box>
                 <Box>{category.label}</Box>
+                {category?.comingSoon && (
+                  <Text bgGradient={"linear(to-r, #805AD5, #FF0080)"} borderRadius="5px" bgClip={"text"}>
+                    Coming Soon
+                  </Text>
+                )}
               </HStack>
             </NavigationLink>
           </Stack>

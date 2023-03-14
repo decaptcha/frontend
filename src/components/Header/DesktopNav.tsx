@@ -10,6 +10,8 @@ import {
   Text,
   Flex,
   Icon,
+  useToast,
+  Button,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
@@ -17,11 +19,14 @@ import { NAV_ITEMS, NavItem } from "@/components/Header/navData";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { FaConnectdevelop, FaUserAstronaut } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export const DesktopNav = (props: BoxProps) => {
   const { asPath } = useRouter();
 
   const activeBg = useColorModeValue("purple.50", "purple.900");
+  const toast = useToast();
+  const wallet = useWallet();
 
   return (
     <Stack direction={"row"} spacing={4} {...props}>
@@ -29,23 +34,55 @@ export const DesktopNav = (props: BoxProps) => {
         const isActive = asPath === navItem.href;
         return (
           <Box key={navItem.label}>
-            <NextLink href={navItem.href ?? "#"} passHref={navItem.passHref}>
+            {navItem.label == "Open dApp" && !wallet?.publicKey ? (
               <Link
-                bg="linear(to-r, #805AD5, #FF0080)"
-                bgGradient="linear(to-r, #805AD5, #FF0080)"
-                p={2}
-                borderRadius="40px"
-                fontSize={"m"}
-                fontWeight={"bold"}
-                color={useColorModeValue("white.50", "white.400")}
-                _hover={{
-                  textDecoration: "none",
-                  bg: "transparent"
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </NextLink>
+              // bg="linear(to-r, #805AD5, #FF0080)"
+              p={2}
+              paddingLeft={5}
+              paddingRight={5}
+              borderRadius="30px"
+              borderColor={"white"}
+              border={"1px"}
+              fontSize={"m"}
+              fontWeight={"bold"}
+              color={useColorModeValue("white.50", "white.400")}
+              onClick={() =>
+                toast({
+                  title: 'Connect Wallet.',
+                  description: "Please connect a wallet first.",
+                  position: "top-right",
+                  status: 'error',
+                  duration: 5000,
+                  isClosable: true,
+                })
+              }
+              _hover={{
+                textDecoration: "none",
+                bgGradient: "linear(to-r, #805AD5, #FF0080)",
+              }}
+            >Open dApp</Link>
+            ) : (
+              <NextLink href={navItem.href ?? "#"} passHref={navItem.passHref}>
+                <Link
+                  // bg="linear(to-r, #805AD5, #FF0080)"
+                  p={2}
+                  paddingLeft={5}
+                  paddingRight={5}
+                  borderRadius="30px"
+                  borderColor={"white"}
+                  border={"1px"}
+                  fontSize={"m"}
+                  fontWeight={"bold"}
+                  color={useColorModeValue("white.50", "white.400")}
+                  _hover={{
+                    textDecoration: "none",
+                    bgGradient: "linear(to-r, #805AD5, #FF0080)",
+                  }}
+                >
+                  {navItem.label}
+                </Link>
+              </NextLink>
+            )}
           </Box>
         );
       })}

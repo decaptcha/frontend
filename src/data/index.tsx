@@ -1,6 +1,7 @@
 
-import { FaConnectdevelop, FaDatabase, FaUserAstronaut } from "react-icons/fa";
+import { FaConnectdevelop, FaDatabase, FaUserAstronaut, FaUsers } from "react-icons/fa";
 import { NavItem } from "@/components/Header/navData";
+import { BsCashCoin } from "react-icons/bs";
 
 export const data: Array<NavItem> = [
   {
@@ -8,23 +9,27 @@ export const data: Array<NavItem> = [
     href: `/researcher`,
     icon: <FaUserAstronaut display={"block"} />,
     passHref: true,
+    comingSoon: false,
   },
   {
     label: "Datasets",
     href: `/researcher/datasets`,
     icon: <FaDatabase />,
     passHref: true,
+    comingSoon: false,
   },
   {
     label: "Developer",
     href: `/developer`,
-    icon: <FaConnectdevelop />,
+    icon: <FaUsers />,
     passHref: true,
+    comingSoon: false,
   },
   {
     label: "Redeem",
     href: `/redeem`,
-    icon: <FaConnectdevelop />,
+    icon: <BsCashCoin />,
     passHref: true,
+    comingSoon: true,
   },
 ];

@@ -18,34 +18,32 @@ import {
 
 import { TextUnderline } from "@/components/TextUnderline";
 import { FaRocket } from "react-icons/fa";
-import { CopyBlock, dracula, solarizedDark } from "react-code-blocks";
+import { CopyBlock, dracula } from "react-code-blocks";
 
 export const Integration = () => {
   return (
-    <Container maxW={"7xl"} py={{ base: 14, sm: 20, md: 32 }}>
+    <Box maxW={"7xl"}>
       <SimpleGrid columns={{ base: 1, md: 1 }} spacing={10}>
         <Stack spacing={4}>
           <HStack>
-            <Heading
-              bgGradient={"linear(to-r, #805AD5, #FF0080)"}
-              bgClip="text"
-              as="h2"
+            <Text
+              // bgGradient={"linear(to-r, #805AD5, #FF0080)"}
+              // bgColor={"#f734b9"}
+              color={"#f734b9"}
+              fontSize={"4xl"}
+              fontWeight={"bold"}
             >
               Seamless Integration
-            </Heading>
-            <Heading as="h2" ml="2">
-              🚀
-            </Heading>
+            </Text>
           </HStack>
 
-          <Text color={"gray.500"} maxW={"4xl"} fontSize={{ md: "lg" }}>
-            Powerful SDK to integrate captcha into your apps, backends and games
+          <Text color={"white"} maxW={"4xl"} fontSize={{ md: "2xl" }}>
+            Powerful SDK to integrate captcha into your webapps.
           </Text>
         </Stack>
 
-        
         {/* <Flex justify={"center"} align={"center"}> */}
-          {/* <Stack
+        {/* <Stack
             key={"dumm"}
             bg={useColorModeValue("gray.100", "gray.900")}
             rounded={"xl"}
@@ -55,16 +53,23 @@ export const Integration = () => {
             align={"center"}
             justify={"space-between"}
           > */}
-            <CopyBlock
-                  language="html"
-                  text={`<script src="https://cdn.jsdelivr.net/gh/decaptcha/sdk/github-cdn/decaptcha.js" type="text/javascript"></script>`}
-                  codeBlock
-                  theme={dracula}
-                  showLineNumbers={false}
-            />
-          {/* </Stack> */}
+        <CopyBlock
+          language="html"
+          text={`<div class="decaptcha" data-sitekey="<YOUR_API_KEY>"> </div>\n<script src="https://cdn.jsdelivr.net/gh/decaptcha/sdk/github-cdn/decaptcha.js" type="text/javascript"></script>`}
+          codeBlock
+          theme={dracula}
+          showLineNumbers={false}
+        />
+        {/* <CopyBlock
+          language="html"
+          text={``}
+          codeBlock
+          theme={dracula}
+          showLineNumbers={false}
+        /> */}
+        {/* </Stack> */}
         {/* </Flex> */}
       </SimpleGrid>
-    </Container>
+    </Box>
   );
 };

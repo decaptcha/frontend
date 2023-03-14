@@ -13,11 +13,7 @@ import { IoArrowForward } from "react-icons/io5";
 
 import { TEMPLATES_LINK } from "../../constants";
 
-type ExploreTemplatesProps = {
-  templatesCount: number;
-};
-
-export const ExploreTemplates = ({ templatesCount }: ExploreTemplatesProps) => {
+export const ExploreTemplates = () => {
   return (
     <Box bg={useColorModeValue("purple.50", "gray.800")}>
       <Container maxW={"7xl"} py={{ base: 14, sm: 20, md: 32 }}>
@@ -31,7 +27,7 @@ export const ExploreTemplates = ({ templatesCount }: ExploreTemplatesProps) => {
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
             <Box>
               <Heading as={"h3"} mb={2}>
-                Explore {templatesCount - 1}+ production-ready Templates
+                Explore 100+ production-ready Templates
               </Heading>
               <Text fontSize={"lg"}>
                 and start building beautiful websites & webapps today!

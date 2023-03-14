@@ -38,13 +38,15 @@ const developer = () => {
             maxW={{ lg: "calc(100% - 16rem)" }}
           >
             <Stack mb={10}>
-              <Heading
-                size={"xl"}
-                bgGradient="linear(to-r, #805AD5, #FF0080)"
-                bgClip="text"
-              >
-                Developer
-              </Heading>
+              <Flex justifyContent={"space-between"}>
+                <Heading
+                  size={"xl"}
+                  bgGradient="linear(to-r, #805AD5, #FF0080)"
+                  bgClip="text"
+                >
+                  Developer
+                </Heading>
+              </Flex>
             </Stack>
             <Stack>
               {wallet && wallet.publicKey && (

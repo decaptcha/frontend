@@ -14,7 +14,6 @@ import { theme } from "../theme"
 const Home: NextPage = () => {
   return (
     <>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <SEO />
       <Hero  />
       <Integration />

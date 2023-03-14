@@ -31,19 +31,16 @@ export const DesktopNav = (props: BoxProps) => {
           <Box key={navItem.label}>
             <NextLink href={navItem.href ?? "#"} passHref>
               <Link
+                bg="linear(to-r, #805AD5, #FF0080)"
+                bgGradient="linear(to-r, #805AD5, #FF0080)"
                 p={2}
+                borderRadius="40px"
                 fontSize={"m"}
                 fontWeight={"bold"}
-                color={
-                  isActive
-                    ? useColorModeValue("purple.700", "purple.400")
-                    : useColorModeValue("gray.700", "gray.300")
-                }
+                color={useColorModeValue("white.50", "white.400")}
                 _hover={{
                   textDecoration: "none",
-                  bg: isActive
-                    ? activeBg
-                    : useColorModeValue("gray.100", "gray.900"),
+                  bg: "transparent"
                 }}
               >
                 {navItem.label}

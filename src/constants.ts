@@ -15,7 +15,7 @@ export const TWITTER_LINK = "https://twitter.com/ChakraTemplates";
 export const FIGMA_LINK =
   "https://www.figma.com/community/file/935959613109017886/Chakra-Templates-UI-Kit";
 export const CONTRIBUTORS_LINK =
-  "https://github.com/hauptrolle/chakra-templates/graphs/contributors";
+  "http://localhost:8083";
 export const CONTRIBUTE_LINK =
   "https://github.com/hauptrolle/chakra-templates/blob/main/CONTRIBUTING.md";
 export const SUGGEST_TEMPLATE_LINK =

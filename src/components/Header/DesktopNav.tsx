@@ -29,7 +29,7 @@ export const DesktopNav = (props: BoxProps) => {
         const isActive = asPath === navItem.href;
         return (
           <Box key={navItem.label}>
-            <NextLink href={navItem.href ?? "#"} passHref>
+            <NextLink href={navItem.href ?? "#"} passHref={navItem.passHref}>
               <Link
                 bg="linear(to-r, #805AD5, #FF0080)"
                 bgGradient="linear(to-r, #805AD5, #FF0080)"

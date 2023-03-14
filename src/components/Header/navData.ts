@@ -11,11 +11,23 @@ export interface NavItem {
   children?: Array<NavItem>;
   href?: string;
   icon?: any;
+  passHref: any;
 }
 
 export const NAV_ITEMS: Array<NavItem> = [
   {
+    label: "Home",
+    href: `/`,
+    passHref: true,
+  },
+  {
     label: "Open DApp",
     href: `/researcher`,
+    passHref: true,
+  },
+  {
+    label: "Demo",
+    href: `http://localhost:8083`,
+    passHref: false,
   },
 ];

@@ -6,7 +6,7 @@ const baseStyle = defineStyle({
   paddingY: 1, // add vertical padding
   fontSize: "sm", // change font size to xs
   fontWeight: "normal", // change the font weight to normal
-  fontFamily: "mono" // change the font family to mono
+  fontFamily: "mono", // change the font family to mono
 });
 
 // Defining a custom variant
@@ -18,16 +18,16 @@ const customVariant = defineStyle((props) => {
     borderStyle: "dashed",
     color: `${c}.500`,
     borderRadius: "4px",
-    fontSize: "md"
+    fontSize: "md",
   };
 });
 
 export const codeTheme = defineStyleConfig({
   baseStyle,
   variants: {
-    custom: customVariant
+    custom: customVariant,
   },
   defaultProps: {
-    colorScheme: "purple" // set the default color scheme to purple
-  }
+    colorScheme: "purple", // set the default color scheme to purple
+  },
 });

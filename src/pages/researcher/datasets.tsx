@@ -330,7 +330,6 @@ const researcher = () => {
                 <Card
                   bg={"purple.900"}
                   borderColor={"purple"}
-                  border={"1px"}
                   variant="elevated"
                   width={"full"}
                 >

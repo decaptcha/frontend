@@ -47,14 +47,13 @@ const developer = () => {
     for (const tokenAccount of tokenAccounts.value) {
       const accountData = AccountLayout.decode(tokenAccount.account.data);
       const mint = await getMint(connection, accountData.mint);
-      
-        accountValues.push({
-          mintAddress: accountData?.mint?.toString(),
-          amount: accountData?.amount?.toString(),
-          totalSupply: mint?.supply?.toString(),
-          decimals: mint?.decimals?.toString(),
-        });
-    
+      accountValues.push({
+        mintAddress: accountData?.mint?.toString(),
+        amount: accountData?.amount?.toString(),
+        totalSupply: mint?.supply?.toString(),
+        decimals: mint?.decimals?.toString(),
+      });
+    }
     return accountValues;
   };
 

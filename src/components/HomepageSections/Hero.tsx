@@ -14,7 +14,6 @@ import NextLink from "next/link";
 import { FC } from "react";
 import styled from "styled-components";
 
-import { TextUnderline } from "@/components/TextUnderline";
 import { HeroComponents } from "@/components/HomepageSections/HeroComponents";
 import {
   SPLITBEE_HERO_SUGGEST_TEMPLATE,
@@ -96,7 +95,7 @@ export const Hero = () => {
               <Text color={"white"} fontSize={{ md: "2xl" }} maxW={"2xl"}>
                 Powered by
               </Text>
-                <SolanaLogo/>
+              <SolanaLogo />
             </HStack>
           </Stack>
 
@@ -132,7 +131,7 @@ export const Hero = () => {
             </Button>
           </Stack> */}
         </Stack>
-        {/* <HeroComponents/> */}
+        <HeroComponents />
       </Stack>
     </Box>
   );

@@ -115,91 +115,93 @@ const developer = () => {
                   Developer
                 </Heading>
               </Flex>
-            </Stack>
-            <Stack mb={"24px"}>
-              {wallet && wallet.publicKey && apiKey && (
+
+              <Stack mb={"24px"}>
+                {wallet && wallet.publicKey && apiKey && (
+                  <Card bg={"purple.900"}>
+                    <CardHeader>
+                      <Text fontSize="2xl" fontWeight={"bold"}>
+                        Account Information
+                      </Text>
+                    </CardHeader>
+                    <CardBody>
+                      <Box>
+                        <Stack spacing={4}>
+                          {apiKey?.["api_key"] && (
+                            <HStack>
+                              <Text fontSize={"medium"}> API Key : </Text>
+                              <CodeBlock
+                                text={apiKey ? apiKey?.["api_key"] : ""}
+                                variant="solid"
+                                theme={dracula}
+                                showLineNumbers={false}
+                              />
+                            </HStack>
+                          )}
+
+                          <HStack>
+                            <Text fontSize={"medium"}> API Key Status : </Text>
+                            <CodeBlock
+                              text={apiKey?.["active"] ? "Active" : "Inactive"}
+                              variant="solid"
+                              showLineNumbers={false}
+                              theme={dracula}
+                            />
+                          </HStack>
+                        </Stack>
+                      </Box>
+                    </CardBody>
+                  </Card>
+                )}
+              </Stack>
+              <Stack mb={"24px"}>
                 <Card bg={"purple.900"}>
                   <CardHeader>
                     <Text fontSize="2xl" fontWeight={"bold"}>
-                      Account Information
+                      Transactions
                     </Text>
                   </CardHeader>
                   <CardBody>
-                    <Box>
-                      <Stack spacing={4}>
-                        {apiKey?.["api_key"] && (
-                          <HStack>
-                            <Text fontSize={"medium"}> API Key : </Text>
-                            <CodeBlock
-                              text={apiKey ? apiKey?.["api_key"] : ""}
-                              variant="solid"
-                              theme={dracula}
-                              showLineNumbers={false}
-                            />
-                          </HStack>
-                        )}
-
-                        <HStack>
-                          <Text fontSize={"medium"}> API Key Status : </Text>
-                          <CodeBlock
-                            text={apiKey?.["active"] ? "Active" : "Inactive"}
-                            variant="solid"
-                            showLineNumbers={false}
-                            theme={dracula}
-                          />
-                        </HStack>
-                      </Stack>
-                    </Box>
+                    <TableContainer bg={"purple.900"}>
+                      <Table variant="simple">
+                        <Thead>
+                          <Tr>
+                            <Th>Mint Address</Th>
+                            <Th>Amount</Th>
+                            <Th>Total Supply</Th>
+                            <Th>Decimals</Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          {wallet &&
+                            wallet.publicKey &&
+                            walletInfo &&
+                            walletInfo.map((label: any) => {
+                              const borderColor = useColorModeValue(
+                                "gray.200",
+                                "gray.600"
+                              );
+                              return (
+                                <Tr key={label.mintAddress}>
+                                  <Td>{label.mintAddress}</Td>
+                                  <Td>
+                                    {label.amount /
+                                      Math.pow(10, label.decimals)}
+                                  </Td>
+                                  <Td>
+                                    {label.totalSupply /
+                                      Math.pow(10, label.decimals)}
+                                  </Td>
+                                  <Td>{label.decimals}</Td>
+                                </Tr>
+                              );
+                            })}
+                        </Tbody>
+                      </Table>
+                    </TableContainer>
                   </CardBody>
                 </Card>
-              )}
-            </Stack>
-            <Stack mb={"24px"}>
-              <Card bg={"purple.900"}>
-                <CardHeader>
-                  <Text fontSize="2xl" fontWeight={"bold"}>
-                    Transactions
-                  </Text>
-                </CardHeader>
-                <CardBody>
-                  <TableContainer bg={"purple.900"}>
-                    <Table variant="simple">
-                      <Thead>
-                        <Tr>
-                          <Th>Mint Address</Th>
-                          <Th>Amount</Th>
-                          <Th>Total Supply</Th>
-                          <Th>Decimals</Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {wallet &&
-                          wallet.publicKey &&
-                          walletInfo &&
-                          walletInfo.map((label: any) => {
-                            const borderColor = useColorModeValue(
-                              "gray.200",
-                              "gray.600"
-                            );
-                            return (
-                              <Tr key={label.mintAddress}>
-                                <Td>{label.mintAddress}</Td>
-                                <Td>
-                                  {label.amount / Math.pow(10, label.decimals)}
-                                </Td>
-                                <Td>
-                                  {label.totalSupply /
-                                    Math.pow(10, label.decimals)}
-                                </Td>
-                                <Td>{label.decimals}</Td>
-                              </Tr>
-                            );
-                          })}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
-                </CardBody>
-              </Card>
+              </Stack>
             </Stack>
           </Flex>
         </Stack>

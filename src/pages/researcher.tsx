@@ -247,7 +247,7 @@ const researcher = () => {
   const handleLabel = (e: any) => {
     setLabel(e.target.value);
   };
-  const getProjectsFromApi : any = async () => {
+  const getProjectsFromApi: any = async () => {
     const data = await fetchProjects({
       walletId: wallet?.publicKey?.toBase58(),
     });
@@ -280,15 +280,14 @@ const researcher = () => {
             <Stack mb={10}>
               <Flex justifyContent={"space-between"}>
                 <Heading
-                  size={"lg"}
+                  size={"xl"}
                   bgGradient="linear(to-r, #805AD5, #FF0080)"
                   bgClip="text"
                 >
                   Researcher
                 </Heading>
               </Flex>
-              <Divider orientation="horizontal" />
-              <Box>
+              <Stack mb={"24px"}>
                 <SimpleGrid
                   columns={{ sm: 1, md: 2, xl: 3 }}
                   spacing="24px"
@@ -404,8 +403,8 @@ const researcher = () => {
                     </CardBody>
                   </Card>
                 </SimpleGrid>
-              </Box>
-              <Box>
+              </Stack>
+              <Stack mb={"24px"}>
                 <Card borderRadius={"16px"} bg={"purple.900"}>
                   <CardHeader>
                     <Flex justifyContent={"space-between"}>
@@ -498,7 +497,7 @@ const researcher = () => {
                     </Box>
                   </CardBody>
                 </Card>
-              </Box>
+              </Stack>
             </Stack>
           </Flex>
         </Stack>

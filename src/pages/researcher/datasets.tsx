@@ -498,14 +498,6 @@ const researcher = () => {
                                 }
                               )}
                           </Tbody>
-                          <Tfoot>
-                            <Tr>
-                              <Th>Label name</Th>
-                              <Th>Clicks</Th>
-                              <Th>Shown to Users</Th>
-                              <Th>Confidence</Th>
-                            </Tr>
-                          </Tfoot>
                         </Table>
                       </TableContainer>
                     </TabPanel>
@@ -553,13 +545,6 @@ const researcher = () => {
                                 }
                               )}
                           </Tbody>
-                          <Tfoot>
-                            <Tr>
-                              <Th>Label name</Th>
-                              <Th>Clicks</Th>
-                              <Th>Shown to Users</Th>
-                            </Tr>
-                          </Tfoot>
                         </Table>
                       </TableContainer>
                     </TabPanel>

@@ -26,8 +26,6 @@
     "@fontsource/open-sans": "^4.5.14",
     "@fontsource/raleway": "^4.5.12",
     "@hypertheme-editor/chakra-ui": "^0.1.6-rc.0",
-    "@react-three/drei": "^9.57.3",
-    "@react-three/fiber": "^8.12.0",
     "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-base": "^0.9.22",
     "@solana/wallet-adapter-react": "^0.15.30",
@@ -56,7 +54,6 @@
     "react-slick": "^0.29.0",
     "sass": "^1.59.2",
     "styled-components": "^5.3.9",
-    "three": "^0.150.1",
     "yarn": "^1.22.19",
     "zustand": "^4.3.6"
   },

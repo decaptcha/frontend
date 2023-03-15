@@ -157,15 +157,12 @@ const researcher = () => {
       console.log("Update Project Resp", resp);
     };
     callUpdateProjectApi()
-      .then((res) => {
-        const explorerLink = `https://explorer.solana.com/address/${res?.mint}?cluster=devnet`;
-        const openLink = `<Link href='https://chakra-ui.com' isExternal>
-      Chakra Design system <ExternalLinkIcon mx='2px' />
-    </Link>`;
+      .then((res: any) => {
+        // const explorerLink = `https://explorer.solana.com/address/${res?.mint}?cluster=devnet`;
         toast({
           position: "top-right",
           title: `Activated Project`,
-          description: `Project has been activated. Verify on Solana Explorer: ${explorerLink}.`,
+          description: `Project has been activated. Verify on Solana Explorer: ${res?.mint}.`,
           status: "success",
           duration: 5000,
           isClosable: true,

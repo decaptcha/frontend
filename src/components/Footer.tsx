@@ -57,32 +57,6 @@ export const Footer = () => {
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
     >
-      <Container as={Stack} maxW={"6xl"} py={10}>
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
-          <Stack align={"flex-start"}>
-            <ListHeader>Researcher</ListHeader>
-            {data.map((category) => (
-              <NextLink key={category.label} href={category.href!} passHref>
-                <Link>{category.label}</Link>
-              </NextLink>
-            ))}
-          </Stack>
-
-          <Stack align={"flex-start"}>
-            <ListHeader>Social</ListHeader>
-            {SOCIAL_LINKS.map((link) => (
-              <Link key={link.label} href={link.href}>
-                {link.label}
-              </Link>
-            ))}
-          </Stack>
-
-
-          <Stack align={"flex-start"}>
-            <ListHeader>Support us</ListHeader>
-          </Stack>
-        </SimpleGrid>
-      </Container>
       <Box pb={10}>
         <Flex
           align={"center"}

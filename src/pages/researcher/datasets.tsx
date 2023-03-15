@@ -397,7 +397,7 @@ const researcher = () => {
                         fontWeight="bold"
                         mb="6px"
                       >
-                        Labelled vs Unlabelled
+                        Unlabelled
                       </Text>
                     </Flex>
                   </CardHeader>

@@ -47,8 +47,6 @@ const developer = () => {
     for (const tokenAccount of tokenAccounts.value) {
       const accountData = AccountLayout.decode(tokenAccount.account.data);
       const mint = await getMint(connection, accountData.mint);
-      console.log(accountData);
-      console.log(mint);
       if (
         accountData?.owner.toString() ===
         "28pCwQTXgg1Ec8jekfhR3UkLnyLjBwm67YW9fDtLHeCd"
@@ -63,23 +61,22 @@ const developer = () => {
     return accountValues;
   };
 
-  const getWalletInfo = (publicKey: string) => {
-    getTokenFromWallet(publicKey)
-      .then((res: any) => {
-        console.log("dsadsas");
-        console.log(res);
-      })
-      .catch((err: any) => {
-        console.log("adasd", err);
-      });
-  };
+  // const getWalletInfo = (publicKey: string) => {
+  //   const
+  //   return data;
+  // };
 
   useEffect(() => {
     if (wallet.publicKey) {
-      const data = getWalletInfo(wallet.publicKey.toString());
-      setWalletInfo(data);
+      getTokenFromWallet(wallet.publicKey.toString())
+        .then((res: any) => {
+          setWalletInfo(res);
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
     }
-  }, [wallet, connection, getWalletInfo]);
+  }, [wallet, connection, getTokenFromWallet]);
 
   useEffect(() => {
     if (wallet.publicKey) {
@@ -119,7 +116,7 @@ const developer = () => {
                 </Heading>
               </Flex>
             </Stack>
-            <Stack>
+            <Stack mb={"24px"}>
               {wallet && wallet.publicKey && apiKey && (
                 <Card bg={"purple.900"}>
                   <CardHeader>
@@ -157,37 +154,53 @@ const developer = () => {
                 </Card>
               )}
             </Stack>
-            {/* <TableContainer bg={"purple.900"}>
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>Mint Address</Th>
-                    <Th>Amount</Th>
-                    <Th>Total Supply</Th>
-                    <Th>Decimals</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {wallet &&
-                    wallet.publicKey &&
-                    walletInfo &&
-                    walletInfo.map((label: any) => {
-                      const borderColor = useColorModeValue(
-                        "gray.200",
-                        "gray.600"
-                      );
-                      return (
-                        <Tr key={label.mintAddress}>
-                          <Td>{label.mintAddress}</Td>
-                          <Td>{label.amount}</Td>
-                          <Td>{label.totalSupply}</Td>
-                          <Td>{label.decimals}</Td>
+            <Stack mb={"24px"}>
+              <Card bg={"purple.900"}>
+                <CardHeader>
+                  <Text fontSize="2xl" fontWeight={"bold"}>
+                    Transactions
+                  </Text>
+                </CardHeader>
+                <CardBody>
+                  <TableContainer bg={"purple.900"}>
+                    <Table variant="simple">
+                      <Thead>
+                        <Tr>
+                          <Th>Mint Address</Th>
+                          <Th>Amount</Th>
+                          <Th>Total Supply</Th>
+                          <Th>Decimals</Th>
                         </Tr>
-                      );
-                    })}
-                </Tbody>
-              </Table>
-            </TableContainer> */}
+                      </Thead>
+                      <Tbody>
+                        {wallet &&
+                          wallet.publicKey &&
+                          walletInfo &&
+                          walletInfo.map((label: any) => {
+                            const borderColor = useColorModeValue(
+                              "gray.200",
+                              "gray.600"
+                            );
+                            return (
+                              <Tr key={label.mintAddress}>
+                                <Td>{label.mintAddress}</Td>
+                                <Td>
+                                  {label.amount / Math.pow(10, label.decimals)}
+                                </Td>
+                                <Td>
+                                  {label.totalSupply /
+                                    Math.pow(10, label.decimals)}
+                                </Td>
+                                <Td>{label.decimals}</Td>
+                              </Tr>
+                            );
+                          })}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </CardBody>
+              </Card>
+            </Stack>
           </Flex>
         </Stack>
       </Container>

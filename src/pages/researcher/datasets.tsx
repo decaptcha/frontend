@@ -464,11 +464,7 @@ const researcher = () => {
                                   );
                                   return (
                                     <Tr key={label.id}>
-                                      <Td
-                                        minWidth={{ sm: "250px" }}
-                                        pl="0px"
-                                        borderColor={borderColor}
-                                      >
+                                      <Td>
                                         <Flex
                                           alignItems="center"
                                           py=".8rem"

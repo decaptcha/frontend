@@ -53,12 +53,13 @@ export const Integration = () => {
             align={"center"}
             justify={"space-between"}
           > */}
+        
         <CopyBlock
           language="html"
-          text={`<div class="decaptcha" data-sitekey="<YOUR_API_KEY>"> </div>\n<script src="https://cdn.jsdelivr.net/gh/decaptcha/sdk/github-cdn/decaptcha.js" type="text/javascript"></script>`}
-          codeBlock
+          text={`<div class="decaptcha" data-sitekey="<YOUR_API_KEY>"> </div>\n\n<script src="https://cdn.jsdelivr.net/gh/decaptcha/sdk/github-cdn/decaptcha.js" type="text/javascript"></script>`}
           theme={dracula}
           showLineNumbers={false}
+          wrapLines
         />
         {/* <CopyBlock
           language="html"

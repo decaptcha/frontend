@@ -328,7 +328,7 @@ const researcher = () => {
             {project && (
               <Stack mb={"24px"}>
                 <Card
-                  bg={"black"}
+                  bg={"purple.900"}
                   borderColor={"purple"}
                   border={"1px"}
                   variant="elevated"

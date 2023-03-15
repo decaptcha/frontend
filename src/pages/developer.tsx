@@ -158,7 +158,7 @@ const developer = () => {
                 <Card bg={"purple.900"}>
                   <CardHeader>
                     <Text fontSize="2xl" fontWeight={"bold"}>
-                      Transactions
+                      Your Holdings
                     </Text>
                   </CardHeader>
                   <CardBody>
